@@ -18,6 +18,8 @@ so wenig Konflikte wie möglich zu haben!
 3. Das gleiche gilt auch beim coden, bitte benennt eure Variablen sinnvoll und nicht einfach i  und wenn die Variable oder die                                   Funktionen längere Namen beinhalten dann wie folgt: 
     creating_chart() und nicht creatingChart() 
   
+## Software
+Ich verwende für HTML/CSS/JS die Webstorm <https://www.jetbrains.com/webstorm/?fromMenu> für Studenten ist das kostenlos und man muss jährlich seine Lizenz erneuern. Falls ihr andere Tools haben wollt oder besser findet einfach bescheid geben. :)
   
   
  
