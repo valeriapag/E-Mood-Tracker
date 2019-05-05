@@ -14,7 +14,7 @@ so wenig Konflikte wie möglich zu haben!
 1. Wir arbeiten nicht an die selbe Datei, jeder arbeitet an seiner eigenen.
 2. Jede Datei wird klein geschrieben und mit Unterstrichen leserlich gemacht, Großbuchstaben sind nicht gestattet. 
    Beispiel: startseite_login.html (richtig), startseiteLogin.htm (in unserem Fall falsch)
-   Sodass wir einheitiche Dateinamen haben 
+   Sodass wir einheitliche Dateinamen haben 
 3. Das gleiche gilt auch beim coden, bitte benennt eure Variablen sinnvoll und nicht einfach i  und wenn die Variable oder die                                   Funktionen längere Namen beinhalten dann wie folgt: 
     creating_chart() und nicht creatingChart() 
   
