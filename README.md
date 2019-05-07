@@ -1,7 +1,7 @@
 # E-Mood-Tracker
 
 ## Git Ablauf
-Hier ein kleiner Ablauf bevor man seinen Code pusht. Dieser Ablauf ist wichtig um mögllichst
+Hier ein kleiner Ablauf bevor man seinen Code pusht. Dieser Ablauf ist wichtig um möglichst
 so wenig Konflikte wie möglich zu haben!
 1. Commit
 2. Pull
