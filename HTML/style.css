@@ -1,40 +1,87 @@
 body {
-    padding: 5rem;
-    background-image: url("imgs/hintergrund.jpg");
-    background-size: cover;
+    background: url("../imgs/hintergrund.jpg") no-repeat center center fixed;
+    background-position: bottom right;
+    background-repeat: no-repeat;
+    background-size: contain;
+    background-color:#F2F2F1;
 }
-form {border: 3px solid #f1f1f1;}
 
-input[type=text], input[type=password] {
+.main-section {
+    margin: 0 auto;
+    margin-top: 130px;
+    padding: 0;
+}
+
+.modal-content {
+    background-color: whitesmoke;
+    opacity: .9;
+    padding: 19px 14px;
+    border-radius: 10px;
+    border: none;
+}
+
+.form-group {
+    margin-bottom: 25px;
+}
+
+.form-group input {
+    height: 42px;
+    border-radius: 5px;
+    border: 0;
+    font-size: 18px;
+    letter-spacing: 2px;
+    padding-left: 54px;
+}
+
+.form-input button {
+    width: 40%;
+    margin: 5px 0 25px;
+}
+.btn-success {
+    background-color:  #F5BD2A;
+    font-size: 19px;
+    border-radius: 5px;
+    padding: 7px 14px;
+    border: 1px solid #daf1ff;
+}
+.btn-success:hover {
+    background-color: #13445e;
+    border: 1px solid #daf1ff;
+}
+
+/*input[type=text], input[type=password] {
     width: 100%;
     padding: 12px 20px;
     margin: 8px 0;
     display: inline-block;
     border: 1px solid #ccc;
     box-sizing: border-box;
-}
+}*/
 
-button {
+/*.btn {
     background-color: #F5BD2A;
     color: white;
-    padding: 14px 20px;
+
     margin: 8px 0;
     border: none;
     cursor: pointer;
     width: 100%;
-}
+}*/
 
-span.psw {
+/*span.psw {
     float: right;
     padding-top: 16px;
-}
+}}*/
 
-.container {
+/*.container {
     padding: 16px;
-}
+    max-width:610px;
+    border:none;
+
+}}*/
 
 /* Change styles for span and cancel button on extra small screens */
-@media screen and (max-width: 300px) {
+/*@media screen and (max-width: 300px) {
     span.psw {
         display: block;
         float: none;
@@ -42,5 +89,5 @@ span.psw {
     .cancelbtn {
         width: 100%;
     }
-}
-.
+}*/
+
