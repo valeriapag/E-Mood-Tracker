@@ -1,7 +1,7 @@
-body {
+#body-image{
     background: url("../imgs/hintergrund.jpg") no-repeat center center fixed;
     background-position: bottom right;
-    background-repeat: no-repeat;
+   /* background-repeat: no-repeat;*/
     background-size: contain;
     background-color:#F2F2F1;
 }
@@ -52,3 +52,42 @@ body {
     color: #13445e;
 }
 
+#dropdown-menu{
+    border:none;
+    font-size: x-large;
+}
+
+.wrapper {
+    display: flex;
+    width: 100%;
+}
+
+#sidebar {
+    width: 250px;
+    position: fixed;
+    top: 0;
+    left: 0;
+    height: 100vh;
+    z-index: 999;
+    background: #1c9879;
+    color: white;
+    transition: all 0.3s;
+}
+
+#font-menu{
+    font-size: x-large;
+    color:white;
+}
+
+#h3{
+    font-weight: bolder;
+}
+#h1{
+    color: #F5BD2A;
+    font-weight: bolder;
+}
+
+#imgs-startseite{
+    width: 8%;
+    height: 8%;
+}

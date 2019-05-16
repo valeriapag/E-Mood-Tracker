@@ -11,30 +11,47 @@
     <title>E-Mood-Tracker</title>
 </head>
 
-<body id="body-image">
+<body>
+<div class="container text-center">
+    <h1 id="h1">Neuigkeiten</h1>
+</div>
 
-   <div class="modal-dialog text-center">
-        <div class="col-sm-9 main-section">
-            <div class="modal-content">
+<div class="container">
+    <img class="rounded center"  id="imgs-startseite" src="../imgs/Icons/notes.png" alt="Chania">
+</div>
 
-                <div class="col-12 form-input">
-                    <form>
-                        <div class="form-group">
-                            <input type="email" class="form-control" placeholder="Username">
-                        </div>
-                        <div class="form-group">
-                            <input type="password" class="form-control" placeholder="Password">
-                        </div>
-                        <button type="submit" class="btn btn-success">Login</button>
-                    </form>
-                </div>
-
-            </div>
+<!-- Dropdown Menü links-->
+<div class="wrapper">
+    <!-- Sidebar -->
+    <nav id="sidebar">
+        <div>
+            <h3 id="h3">E-Mood-Tracker</h3>
         </div>
-    </div>
+
+        <ul class="list-unstyled components">
+
+            <li>
+                <a href="#homeSubmenu" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle" id="font-menu">Menü</a>
+                <ul class="collapse list-unstyled" id="homeSubmenu">
+                    <li>
+                        <a href="#" id="font-menu">Patient anlegen</a>
+                    </li>
+                    <li>
+                        <a href="#" id="font-menu">Patient suchen</a>
+                    </li>
+                    <li>
+                        <a href="#" id="font-menu" >Ausloggen</a>
+                    </li>
+                </ul>
+            </li>
+        </ul>
+
+    </nav>
+    <!-- Page Content -->
+</div>
 
 
- <!-- Optional JavaScript -->
+<!-- Optional JavaScript -->
 <!-- jQuery first, then Popper.js, then Bootstrap JS -->
 <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
