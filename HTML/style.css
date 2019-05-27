@@ -103,5 +103,18 @@
     width: 50%;
     height: 50%;
     border-radius: 0%;
+}
+
+#button-color{
+color: white;
+}
+
+#p{
+    color: white;
+    font-size: large;
+    font-weight: bolder;
+}
+
+#position{
     position: center;
 }

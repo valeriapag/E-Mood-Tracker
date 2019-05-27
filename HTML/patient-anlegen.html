@@ -18,11 +18,12 @@
     <div class="container-fluid">
         <div class="row no-gutters">
 
-            <div class="col" id="col-formular">
+            <div class="col " id="col-formular" >
                 <h1 class = "text-left" style="color: white">Patientendaten</h1>
                 <div class="form-group">
                     <input type="text" class="form-control"  id = "formular-size" placeholder="Name" name="name">
                 </div>
+
                 <div class="form-group">
                     <input type="text" class="form-control"   id = "formular-size" placeholder="Vorname" name="vorname">
                 </div>
@@ -44,10 +45,41 @@
                 <div class="form-group">
                     <input type="email" class="form-control"   id = "formular-size" placeholder="E-Mail" name="email">
                 </div>
+                <div>
+                    <p id="p">Geschlecht:</p>
+                    <a href="#" class="btn btn-primary btn-lg active btn btn-pill btn-warning" id="button-color" role="button" aria-pressed="true">W</a>
+                    <a href="#" class="btn btn-primary btn-lg active btn btn-pill btn-warning" id="button-color" role="button" aria-pressed="true">M</a>
+                    <a href="#" class="btn btn-primary btn-lg active btn btn-pill btn-warning" id="button-color" role="button" aria-pressed="true">D</a>
+                </div>
+                <br>
+                <div>
+                    <button type="button" class="btn btn-outline-light">Abbrechen</button>
+                </div>
+                <br>
             </div>
             <div class="col" id="col-krankheitsbild">
                 <h1 class = "text-right" id="h1">Krankheitsbild</h1>
-                Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem aperiam, eaque ipsa quae ab illo inventore veritatis et quasi architecto beatae vitae dicta sunt explicabo.
+                <div class="form-group">
+                    <input type="text" class="form-control"   id = "formular-size" placeholder="Krankheit eintragen" name="krankheit">
+                </div>
+
+                <div class="text-center">
+                    <h2 class = "text-center" id="h1">Medikament angeordnet</h2>
+                    <br>  <br>
+                    <a href="#" class="btn btn-outline-dark btn-lg" role="button" aria-pressed="true">Ja</a>
+                    <a href="#" class="btn btn-outline-warning btn-lg" role="button" aria-pressed="true">Nein</a>
+                </div>
+                <br> <br>
+                <div class="form-group">
+                    <h2 class = "text-center" id="h1">Benutzerlogin</h2>
+                    <br> <br>
+                    <input type="text" class="form-control" id = "formular-size" placeholder="Benutzername" name="krankheit">
+                </div>
+                <br><br><br><br><br><br><br><br><br><br><br><br><br><br><br>
+                <div>
+                    <button type="button" class="btn btn-outline-warning float-right">Generiere Benutzer</button>
+                </div>
+
             </div>
         </div>
     </div>
