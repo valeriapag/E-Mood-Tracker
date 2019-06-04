@@ -47,7 +47,6 @@ function jsPost(postUrl, data) {
             });
             $this.removeAttr('disabled').html('Login');
         }
-
          */
     };
     xhr.open("POST", postUrl,true);
