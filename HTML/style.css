@@ -1,5 +1,5 @@
 #body-image{
-    background: url("../imgs/hintergrund.jpg") no-repeat center center fixed;
+    background: url("imgs/hintergrund.jpg") no-repeat center center fixed;
     background-position: bottom right;
    /* background-repeat: no-repeat;*/
     background-size: contain;
