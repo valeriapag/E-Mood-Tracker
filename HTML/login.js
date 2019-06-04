@@ -25,7 +25,7 @@ function jsPost(postUrl, data) {
             });
             $this.removeAttr('disabled').html('Login');
         }
-        else if (this.readyState == 4 && this.status == 200){
+        else if (this.readyState == 4 && this.status == 200) {
             swal.fire({
                 toast: true,
                 position: 'center',
@@ -37,8 +37,8 @@ function jsPost(postUrl, data) {
             console.log("TEST");
             console.log(xhr.responseText);
         }
-        /*
         else {
+            /*
             Swal.fire({
                 title: 'Keine Verbindung!',
                 type: 'error',
@@ -46,8 +46,8 @@ function jsPost(postUrl, data) {
                 confirmButtonText: 'Ok'
             });
             $this.removeAttr('disabled').html('Login');
+            */
         }
-         */
     };
     xhr.open("POST", postUrl,true);
     xhr.setRequestHeader("Content-type", "application/json");
