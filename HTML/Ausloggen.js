@@ -16,15 +16,9 @@ $(function () {
         //  Change to loading icon and disable button
         $this.attr('disabled', 'disabled').html("<span " +
             "class=\"spinner-border spinner-border-sm\" role=\"status\" aria-hidden=\"true\"></span>");
-        //  Get user and password inputs
-        var usr = $("#usr").val();
-        var pw = $("#pw").val();
+        //  Send logout info to server
         //  server url
-        var url = "https://httpbin.org/poste";
-        var req = JSON.stringify({
-            user: usr,
-            password: pw
-        });
-        jsLogout(url, req);
+        var url = "https://httpbin.org/get";
+        jsLogout(url);
     });
 });

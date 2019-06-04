@@ -70,7 +70,7 @@ $(function(){
         var usr = $("#usr").val();
         var pw = $("#pw").val();
         //  server url
-        var url = "https://httpbin.org/poste";
+        var url = "https://httpbin.org/post";
         var req = JSON.stringify({
             user: usr,
             password: pw
