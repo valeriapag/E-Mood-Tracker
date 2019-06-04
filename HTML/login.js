@@ -36,20 +36,21 @@ function jsPost(postUrl, data) {
             });
             document.write(xhr.responseText);
         }
-        else {
-            /*
-            Swal.fire({
-                title: 'Keine Verbindung!',
-                type: 'error',
-                backdrop: 'true',
-                confirmButtonText: 'Ok'
-            });
-            $this.removeAttr('disabled').html('Login');
-            */
-        }
     };
     xhr.open("POST", postUrl,true);
     xhr.setRequestHeader("Content-type", "application/json");
+    //  Set timeout duration
+    xhr.timeout = 5000;
+    //  Define function on timeout -> Show popup "Keine Verbindung"
+    xhr.ontimeout = function () {
+        Swal.fire({
+            title: 'Keine Verbindung!',
+            type: 'error',
+            backdrop: 'true',
+            confirmButtonText: 'Ok'
+        });
+        $this.removeAttr('disabled').html('Login');
+    };
     xhr.send(data);
 }
 
