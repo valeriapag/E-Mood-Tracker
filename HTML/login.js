@@ -34,7 +34,10 @@ function jsPost(postUrl, data) {
                 type: 'success',
                 title: 'Erfolgreich eingeloggt!'
             });
+            console.log("TEST");
+            console.log(xhr.responseText);
         }
+        /*
         else {
             Swal.fire({
                 title: 'Keine Verbindung!',
@@ -44,6 +47,8 @@ function jsPost(postUrl, data) {
             });
             $this.removeAttr('disabled').html('Login');
         }
+
+         */
     };
     xhr.open("POST", postUrl,true);
     xhr.setRequestHeader("Content-type", "application/json");
@@ -66,7 +71,7 @@ $(function(){
         var usr = $("#usr").val();
         var pw = $("#pw").val();
         //  server url
-        var url = "https://www.server.com";
+        var url = "http://httpbin.org/post";
         var req = JSON.stringify({
             user: usr,
             password: pw
