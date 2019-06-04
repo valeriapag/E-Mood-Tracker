@@ -23,7 +23,7 @@ function jsPost(postUrl, data) {
                 backdrop: 'true',
                 confirmButtonText: 'Ok'
             });
-            $this.removeAttr('disabled').html('Login');
+            $("#load").removeAttr('disabled').html('Login');
         }
         else if (this.readyState == 4 && this.status == 200) {
             swal.fire({
@@ -49,7 +49,7 @@ function jsPost(postUrl, data) {
             backdrop: 'true',
             confirmButtonText: 'Ok'
         });
-        $this.removeAttr('disabled').html('Login');
+        $("#load").removeAttr('disabled').html('Login');
     };
     xhr.send(data);
 }
@@ -70,7 +70,7 @@ $(function(){
         var usr = $("#usr").val();
         var pw = $("#pw").val();
         //  server url
-        var url = "https://httpbin.org/post";
+        var url = "https://httpbin.org/poste";
         var req = JSON.stringify({
             user: usr,
             password: pw
