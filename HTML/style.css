@@ -147,3 +147,10 @@ color: white;
     padding: 10px;
     box-shadow: inset 0 3px 0#F5BD2A;
 }
+
+.container-canvas {
+    /* This could be done in one single declaration. See the extended sample. */
+    margin-right: auto;
+    margin-left: auto;
+    width: 800px;
+}
