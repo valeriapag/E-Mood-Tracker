@@ -34,10 +34,18 @@ function jsLogout (url) {
 }
 
 $(function () {
-    //  Get button element
-    var $btn = $('#logout');
     //  On click: start logout procedure
-    $btn.click(function(){
+    $('#logout').click(function(){
+        var $this = $(this);
+        //  Change to loading icon and disable button
+        $this.attr('disabled', 'disabled').html("<span " +
+            "class=\"spinner-border spinner-border-sm\" role=\"status\" aria-hidden=\"true\"></span>");
+        //  Send logout info to server
+        //  server url /logout
+        var url = "https://httpbin.org/get";
+        jsLogout(url);
+    });
+    $('#').click(function(){
         var $this = $(this);
         //  Change to loading icon and disable button
         $this.attr('disabled', 'disabled').html("<span " +
