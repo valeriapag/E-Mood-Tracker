@@ -1,3 +1,7 @@
+/*
+   plotting diagramm with chart.js
+ */
+
 const CHART= document.getElementById("lineChart");
 console.log(CHART);
 let lineChart= new Chart(CHART, {
