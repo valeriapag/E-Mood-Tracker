@@ -15,9 +15,10 @@
  */
 function jsPost(postUrl, data) {
     var xhr = new XMLHttpRequest();
+    //  On successful request -> popup
     xhr.onreadystatechange = function() {
         if (this.readyState == 4 && this.status == 401) {
-            Swal.fire({
+            swal.fire({
                 title: 'Falsches Passwort!',
                 type: 'error',
                 backdrop: 'true',
@@ -43,7 +44,7 @@ function jsPost(postUrl, data) {
     xhr.timeout = 5000;
     //  Define function on timeout -> Show popup "Keine Verbindung"
     xhr.ontimeout = function () {
-        Swal.fire({
+        swal.fire({
             title: 'Keine Verbindung!',
             type: 'error',
             backdrop: 'true',
@@ -70,7 +71,7 @@ $(function(){
         var usr = $("#usr").val();
         var pw = $("#pw").val();
         //  server url
-        var url = "https://httpbin.org/post";
+        var url = "https://httpbine.org/post";
         var req = JSON.stringify({
             user: usr,
             password: pw

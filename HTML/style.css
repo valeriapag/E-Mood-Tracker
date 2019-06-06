@@ -74,7 +74,7 @@
     transition: all 0.3s;
 }
 
-#font-menu{
+.font-menu{
     font-size: x-large;
     color:white;
 }
@@ -82,12 +82,13 @@
 #h3{
     font-weight: bolder;
 }
-#h1{
+
+.h1new{
     color: #F5BD2A;
     font-weight: bolder;
 }
 
-#imgs-startseite{
+.imgs-startseite{
     width: 5%;
     height: 5%;
 }
@@ -99,13 +100,13 @@
     background-color: #F2F2F1;
 }
 
-#formular-size{
+.formular-size{
     width: 50%;
     height: 50%;
     border-radius: 0%;
 }
 
-#button-color{
+.button-color{
 color: white;
 }
 
