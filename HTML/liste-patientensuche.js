@@ -1,19 +1,10 @@
-var options = {
-    valueNames:['fname', 'lname','name']
-};
-
-var people = new List('people', options);
-
-var fnameField = $('#fnameField'),
-    lnameField = $('#lnameField'),
-    yearField = $('#yearField');
-
 $(function() {
-    $('#add-btn').onclick(function() {
-        people.add({
-            fname: fnameField.val(),
-            lname: lnameField.val(),
-            year: yearField.val()
-        });
+    $("#add-btn").click(function() {
+        var fnameField = $('#fname').val();
+        var lnameField = $('#lname').val();
+        var yearField = $('#year').val();
+        $("#listBody").append('<li><span class="fname">' + fnameField + ' </span>' +
+        '<span class="lname">' + lnameField + ' </span>' +
+        '<span class="year">' + yearField + '</span></li>');
     });
 });

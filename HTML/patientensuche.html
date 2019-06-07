@@ -21,26 +21,26 @@
             <div class="col-12 form-input">
                 <form>
                     <div class="form-group">
-                        <input type="text" class="form-control" placeholder="Name">
+                        <input type="text" id="lname" class="form-control" placeholder="Name">
                     </div>
                     <div class="form-group">
-                        <input type="text" class="form-control" placeholder="Vorname">
+                        <input type="text" id="fname" class="form-control" placeholder="Vorname">
                     </div>
                     <div class="form-group">
-                        <input type="text" class="form-control" placeholder="Geburtsdatum">
+                        <input type="text" id="gDate" class="form-control" placeholder="Geburtsdatum">
                     </div>
                     <div class="form-group">
-                        <input type="text" class="form-control" placeholder="Krankheit">
+                        <input type="text" id="illness" class="form-control" placeholder="Krankheit">
                     </div>
                     <div>
                         <p style="color: dimgray">Geschlecht:</p>
-                        <a href="#" class="btn btn-primary btn-lg active btn btn-pill btn-warning button-color" role="button" aria-pressed="true">W</a>
-                        <a href="#" class="btn btn-primary btn-lg active btn btn-pill btn-warning button-color" role="button" aria-pressed="true">M</a>
-                        <a href="#" class="btn btn-primary btn-lg active btn btn-pill btn-warning button-color" role="button" aria-pressed="true">D</a>
+                        <a href="#" id="genderW" class="btn btn-primary btn-lg active btn btn-pill btn-warning button-color" role="button" aria-pressed="true">W</a>
+                        <a href="#" id="genderM" class="btn btn-primary btn-lg active btn btn-pill btn-warning button-color" role="button" aria-pressed="true">M</a>
+                        <a href="#" id="genderD" class="btn btn-primary btn-lg active btn btn-pill btn-warning button-color" role="button" aria-pressed="true">D</a>
                     </div>
                     <br>
                     <br>
-                    <button type="submit" class="btn btn-success">suchen</button>
+                    <button class="btn btn-success" id="search">suchen</button>
                 </form>
             </div>
 
@@ -88,5 +88,6 @@
 <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
 <script src="https://cdn.jsdelivr.net/npm/sweetalert2@8"></script>
 <script type="text/javascript" src="Ausloggen.js"></script>
+<script type="text/javascript" src="Patientensuche.js"></script>
 </body>
 </html>

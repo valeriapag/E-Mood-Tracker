@@ -47,9 +47,9 @@ $(function () {
         var url = "https://httpbin.org/get";
         jsLogout(url);
     });
-    $('#logoutDrop').click(function(){
+    $("#logoutDrop").click(function(){
         //  Disable dropdown button
-        $('#logoutDrop').attr('disabled', 'disabled');
+        $("#logoutDrop").attr('disabled', 'disabled');
         //  Send logout info to server
         //  server url
         var url = "https://httpbin.org/get";
