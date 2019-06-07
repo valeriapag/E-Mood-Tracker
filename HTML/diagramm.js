@@ -11,7 +11,6 @@ new Chart(document.getElementById("lineChart"), {
         datasets: [
             {
                 label: "My first dataset",
-                /*
                 fill: false,
                 lineTension: 0.1,
                 backdropColor: "rgba(75,192,192,0.4)",
@@ -29,10 +28,16 @@ new Chart(document.getElementById("lineChart"), {
                 pointHoverBorderWidth: 2,
                 pointRadius: 1,
                 pointHitRadius: 10,
-                */
                 data: [65, 59, 80, 81, 56, 55, 40]
             }
         ]
+    },
+    options: {
+        legend: { display: true },
+        title: {
+            display: true,
+            text: 'Predicted world population (millions) in 2050'
+        }
     }
 
 });
