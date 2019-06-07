@@ -16,23 +16,14 @@ function jsSearch(postUrl, data) {
     var xhr = new XMLHttpRequest();
     //  On successful request -> popup
     xhr.onreadystatechange = function() {
-        if (this.readyState == 4 && this.status == 401) {
-            swal.fire({
-                title: 'Falsches Passwort!',
-                type: 'error',
-                backdrop: 'true',
-                confirmButtonText: 'Ok'
-            });
-            $("#load").removeAttr('disabled').html('Login');
-        }
-        else if (this.readyState == 4 && this.status == 200) {
+        if (this.readyState == 4 && this.status == 200) {
             swal.fire({
                 toast: true,
                 position: 'center',
                 showConfirmButton: false,
                 timer: 2000,
                 type: 'success',
-                title: 'Erfolgreich eingeloggt!'
+                title: 'Erfolgreich gesendet!'
             });
             document.write(xhr.responseText);
         }
@@ -40,8 +31,9 @@ function jsSearch(postUrl, data) {
     xhr.open("POST", postUrl,true);
     xhr.setRequestHeader("Content-type", "application/json");
     //  Set timeout duration
-    xhr.timeout = 5000;
+    //xhr.timeout = 5000;
     //  Define function on timeout -> Show popup "Keine Verbindung"
+    /*
     xhr.ontimeout = function () {
         swal.fire({
             title: 'Keine Verbindung!',
@@ -49,20 +41,24 @@ function jsSearch(postUrl, data) {
             backdrop: 'true',
             confirmButtonText: 'Ok'
         });
-        $("#load").removeAttr('disabled').html('Login');
+        $("#search").removeAttr('disabled').html('suchen');
     };
+    */
     xhr.send(data);
 }
 
 function getGender() {
-    if($('#genderW').attr("checked")){
+    if($('#genderW').prop("checked")){
         return 'W';
     }
-    else if ($('#genderM').attr("checked")) {
+    else if ($('#genderM').prop("checked")) {
         return 'M';
     }
-    else if ($('#genderD').attr("checked")) {
+    else if ($('#genderD').prop("checked")) {
         return 'U';
+    }
+    else {
+        return null;
     }
 }
 
@@ -70,24 +66,29 @@ function getGender() {
     Calls POST function if button clicked, changes to loading icon and back
  */
 $(function(){
-    //  On click: start searching
-    $('#search').click(function(){
+
+    $("#search").click(function(){
         var $this = $(this);
         //  Change to loading icon and disable button
         $this.attr('disabled', 'disabled').html("<span " +
             "class=\"spinner-border spinner-border-sm\" role=\"status\" aria-hidden=\"true\"></span>");
         //  Get patient data input
-        var lname = $("#usr").val();
-        var fname = $("#pw").val();
-        var gDate = $("#usr").val();
-        var illness = $("#pw").val();
+        var lname = $("#lname").val();
+        var fname = $("#fname").val();
+        var gDate = $("#gDate").val();
+        var illness = $("#illness").val();
+        var gender = getGender();
 
         //  server url
-        var url = "https://httpbine.org/post";
-        var req = JSON.stringify({
-            user: usr,
-            password: pw
+        var url = "http://httpbin.org/post";
+        var reqJson = JSON.stringify({
+            lastName: lname,
+            firstName: fname,
+            geburtsDatum: gDate,
+            krankheit: illness,
+            geschlecht: gender
         });
-        jsPost(url, req);
+
+        jsSearch(url, reqJson);
     });
 });
