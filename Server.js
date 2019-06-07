@@ -4,13 +4,13 @@ var file = new StaticServer.Server('./public'); //Die Dateien befinden sich auf 
 //var querystring = require('querystring'); //Das Modul QueryString wird geladen
 
 
-function handleRequest (request, response) { //Eventhändler für ankommende Anfragen
+function handleRequest (request, response) { //Eventhandler für ankommende Anfragen
 	//console.log ist die Ausgabemethode in der Konsole
 	console.log('Request received'); //Gibt 'Request received' aus 
 	console.log('Method: ' + request.method); // Gibt aus welche Methode verwendet wird, für das Abrufen der Webseite (GET-Methode)
 	console.log('Http version: ' + request.httpVersion); // Gibt aus welche HTTP Version verwendet wird (Version 1.1)
-	console.log('Pfad: ' + request.url); // Gibt in der statitschen Webseite aus welche Datei(Pfad) aufgerufen wird.
-	console.log('Header: ') //Dient dazu, um zu sehen ab wann der Header anfangen tut.
+	console.log('Pfad: ' + request.url); // Gibt in der statischen Webseite aus welche Datei(Pfad) aufgerufen wird.
+	console.log('Header: '); //Dient dazu, um zu sehen wo der Header beginnt.
 	console.log(request.headers); //Gibt den Inhalt vom Header aus
 
 	request.addListener('end', function () { 
