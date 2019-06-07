@@ -2,8 +2,6 @@
    plotting diagramm with chart.js
  */
 
-//const CHART= document.getElementById("lineChart");
-//console.log(CHART);
 new Chart(document.getElementById("lineChart"), {
     type: 'line',
     data: {
@@ -36,8 +34,9 @@ new Chart(document.getElementById("lineChart"), {
         legend: { display: true },
         title: {
             display: true,
+            responsive: true,
+            mode: 'nearest',
             text: 'Predicted world population (millions) in 2050'
         }
     }
-
 });
