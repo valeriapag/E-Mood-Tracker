@@ -66,7 +66,6 @@ function getGender() {
     Calls POST function if button clicked, changes to loading icon and back
  */
 $(function(){
-
     $("#search").click(function(){
         var $this = $(this);
         //  Change to loading icon and disable button
