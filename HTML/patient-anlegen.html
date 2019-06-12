@@ -47,9 +47,11 @@
                 </div>
                 <div>
                     <p id="p">Geschlecht:</p>
-                    <a href="#" class="btn btn-primary btn-lg active btn btn-pill btn-warning button-color" role="button" aria-pressed="true">W</a>
-                    <a href="#" class="btn btn-primary btn-lg active btn btn-pill btn-warning button-color" role="button" aria-pressed="true">M</a>
-                    <a href="#" class="btn btn-primary btn-lg active btn btn-pill btn-warning button-color" role="button" aria-pressed="true">D</a>
+                    <select class="dm form-control" id="dm1" name="gen">
+                        <option>Maennlich</option>
+                        <option>Weiblich</option>
+                        <option>Unbestimmt</option>
+                    </select>
                 </div>
                 <br><br><br><br><br><br><br><br>
                 <div>
@@ -66,18 +68,20 @@
                 <div class="text-center">
                     <h2 class = "text-center h1new">Medikament angeordnet</h2>
                     <br>  <br>
-                    <a href="#" class="btn btn-outline-dark btn-lg" role="button" aria-pressed="true">Ja</a>
-                    <a href="#" class="btn btn-outline-warning btn-lg" role="button" aria-pressed="true">Nein</a>
+                    <select class="form-control dm" id="dm2" name="meds">
+                        <option value="1">Ja</option>
+                        <option value="0">Nein</option>
+                    </select>
                 </div>
                 <br> <br>
                 <div class="form-group">
                     <h2 class = "text-center h1new">Benutzerlogin</h2>
                     <br> <br>
-                    <input type="text" class="form-control" id = "formular-size" placeholder="Benutzername" name="krankheit">
+                    <input type="text" class="form-control" id = "formular-size" placeholder="Benutzername" name="username">
                 </div>
                 <br><br><br><br><br><br><br><br><br><br><br><br><br><br><br>
                 <div>
-                    <button type="button" class="btn btn-outline-warning float-right">Generiere Benutzer</button>
+                    <button type="button" class="btn btn-outline-warning float-right" id="genUser">Generiere Benutzer</button>
                 </div>
 
             </div>
@@ -89,5 +93,7 @@
 <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
 <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@8"></script>
+<script type="text/javascript" src="patientAnlegen.js"></script>
 </body>
 </html>

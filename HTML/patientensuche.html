@@ -21,22 +21,24 @@
             <div class="col-12 form-input">
                 <form>
                     <div class="form-group">
-                        <input type="text" id="lname" class="form-control" placeholder="Name">
+                        <input type="text" id="lname" class="form-control" placeholder="Name" name="name">
                     </div>
                     <div class="form-group">
-                        <input type="text" id="fname" class="form-control" placeholder="Vorname">
+                        <input type="text" id="fname" class="form-control" placeholder="Vorname" name="vorname">
                     </div>
                     <div class="form-group">
-                        <input type="text" id="gDate" class="form-control" placeholder="Geburtsdatum">
+                        <input type="text" id="gDate" class="form-control" placeholder="Geburtsdatum" name="gbDatum">
                     </div>
                     <div class="form-group">
-                        <input type="text" id="illness" class="form-control" placeholder="Krankheit">
+                        <input type="text" id="illness" class="form-control" placeholder="Krankheit" name="illness">
                     </div>
                     <div>
                         <p style="color: dimgray">Geschlecht:</p>
-                        <a href="#" id="genderW" class="btn btn-primary btn-lg active btn btn-pill btn-warning button-color" role="button">W</a>
-                        <a href="#" id="genderM" class="btn btn-primary btn-lg active btn btn-pill btn-warning button-color" role="button">M</a>
-                        <a href="#" id="genderD" class="btn btn-primary btn-lg active btn btn-pill btn-warning button-color" role="button">D</a>
+                        <select class="dm form-control" id="dm1" name="gen">
+                            <option>Männlich</option>
+                            <option>Weiblich</option>
+                            <option>Unbestimmt</option>
+                        </select>
                     </div>
                     <br>
                     <br>
