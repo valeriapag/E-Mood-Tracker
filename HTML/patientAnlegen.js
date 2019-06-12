@@ -2,10 +2,9 @@
     Patient create script (JS)
     --
     Contains function to get inputs for patient data, then sends it to the server. It then waits for server response:
-    1. On search button click -> set to loading icon (spinner)
-    2. patients found -> server redirects to search list
-    3. nothing found -> output error message "Keine Patienten gefunden!"
-    4. no connection -> output error message "Keine Verbindung" as popup, reset button
+    1. on Generiere Benutzer button click -> set to loading icon (spinner)
+    2. patient successfully added -> popup
+    3. no connection -> output error message "Keine Verbindung" as popup, reset button
     --
  */
 
@@ -43,21 +42,6 @@ function jsCreate(postUrl, data) {
         $("#genUser").removeAttr('disabled').html('suchen');
     };
     xhr.send(data);
-}
-
-function getGender() {
-    if($('#').prop("checked")){
-        return 'W';
-    }
-    else if ($('#genderM').prop("checked")) {
-        return 'M';
-    }
-    else if ($('#genderD').prop("checked")) {
-        return 'U';
-    }
-    else {
-        return null;
-    }
 }
 
 /*

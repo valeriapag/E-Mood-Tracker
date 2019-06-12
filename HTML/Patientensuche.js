@@ -63,15 +63,13 @@ $(function(){
         });
 
         //  Add gender key/value
-        var gender = $("#dm1 option:selected").text();
-        map.set("gender", gender);
-        document.write(map);
+        var gender = $("#dm2 option:selected").text();
+        map["gender"] = gender;
         delete map["gen"];
 
         //  server url
         var url = "https://httpbin.org/post";
         var reqJson = JSON.stringify(map);
-        document.write(reqJson);
 
         jsSearch(url, reqJson);
     });
