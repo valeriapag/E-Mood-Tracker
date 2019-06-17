@@ -22,6 +22,5 @@ var options = {
 	cert: fs.readFileSync('KEY/certificate.pem')
 };
 
-
-https.createServer(options, handleRequest).listen(8080);// "Startet den Server durch die Verbindung mit dem Port 8080
+https.createServer(options, handleRequest).listen(8080);// "Startet den Server, weist Port 8080 zu
 console.log('Server started, listening at port 8080'); //Gibt 'Server started, listening at port 8080' aus 
