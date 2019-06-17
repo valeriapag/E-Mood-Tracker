@@ -36,13 +36,13 @@ MongoClient.connect(url, function(err, db){  //Datenbankverbindug zur URL erstel
 */
 
 var mysql = require('mysql');
-
+/*
 var con1 = mysql.createConnection({
   host: "localhost",
   user: "root",
   password: "root"
 });
-
+*/
 var con1 = mysql.createConnection({
   host: "localhost",
   user: "root",
