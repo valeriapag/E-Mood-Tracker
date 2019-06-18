@@ -20,7 +20,7 @@ function jsGetData (url, req) {
                 title: 'Erfolgreich ausgeloggt!'
             });
             var json = JSON.parse(xhr.responseText);
-            return json["patientData"];
+            return json;
         }
     };
     //  Define function on timeout -> Show popup "Keine Verbindung"
@@ -44,7 +44,9 @@ $(function() {
         patient: patId
     });
     //  Get data
-    var patData = jsGetData(url,req);
+    var json = jsGetData(url,req);
+    var patData = json["patientData"];
+    var note = json["note"];
     new Chart(document.getElementById("lineChart"), {
         type: 'line',
         data: {
@@ -82,5 +84,10 @@ $(function() {
                 text: 'Predicted world population (millions) in 2050'
             }
         }
+    });
+    var i = 0;
+    note.forEach(function(item) {
+        i = i + 1;
+        $("#patNote").append('<p>' + i + '. ' + item["note"] + '</p>');
     });
 });

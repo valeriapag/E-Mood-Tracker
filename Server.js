@@ -1,6 +1,6 @@
 var StaticServer = require('node-static'); //Das Modul node-static für den Statischen Server wird geladen
-var http = require('http'); //Ladet den http Module für das erstellten des http servers
-var file = new StaticServer.Server('./public'); //Die Dateien befinden sich auf dem statischem Server im Ordner public. (Indemfall die HTML-Dateien für unseren Webseite)
+var http = require('http'); //Ladet den http Module für das Erstellen des http servers
+var file = new StaticServer.Server('./public'); //Die Dateien befinden sich auf dem statischen Server im Ordner public. (In diesem Fall die HTML-Dateien für unsere Webseite)
 //var querystring = require('querystring'); //Das Modul QueryString wird geladen
 
 
