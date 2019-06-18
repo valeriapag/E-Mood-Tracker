@@ -30,11 +30,12 @@ function jsLogout (url) {
             backdrop: 'true',
             confirmButtonText: 'Ok'
         });
-        $("#logoutSearch").removeAttr('disabled').html('Login');
-        $("#logoutDiag").removeAttr('disabled').html('Login');
-        $("#logoutStart").removeAttr('disabled').html('Login');
+        $("#logoutSearch").removeAttr('disabled');
+        $("#logoutDiag").removeAttr('disabled');
+        $("#logoutStart").removeAttr('disabled');
         $("#login").removeAttr('disabled').html('Login');
-        $("#logoutLayout").removeAttr('disabled').html('Login');
+        $("#logoutLayout").removeAttr('disabled');
+        $("#patientLogout").removeAttr('disabled').html('Login');
     };
     xhr.send();
 }
@@ -60,6 +61,7 @@ $(function () {
         // server url
         //var url = "http://www.google.com:81/";
         var url = "https://httpbin.org/get";
+        //  Redirect to login page if connection successful
         jsLogout(url);
     });
     //  On click (Dropdown menu): start logout procedure
@@ -84,6 +86,15 @@ $(function () {
     $("#logoutSearch").click(function(){
         //  Disable dropdown button
         $("#searchLogout").attr('disabled', 'disabled');
+        //  Send logout info to server
+        //  server url
+        var url = "https://httpbin.org/get";
+        jsLogout(url);
+    });
+    $("#patientLogout").click(function(){
+        //  Disable button and show spinner
+        $("#patientLogout").attr('disabled', 'disabled').html("<span " +
+            "class=\"spinner-border spinner-border-sm\" role=\"status\" aria-hidden=\"true\"></span>");
         //  Send logout info to server
         //  server url
         var url = "https://httpbin.org/get";
