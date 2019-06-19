@@ -58,38 +58,58 @@ function handleRequest (request, response) { //Eventhandler für ankommende Anfr
 
 //	Handle get request for login page
 app.get("/", function(req, res) {
-		if (req.session !== undefined) {
+		if (0) {
 			console.log("Bereits eingeloggt als " + req.session.status);
 			res.redirect("/startPage");
 		}
 		else {
-			res.sendFile(__dirname + '/login.html');
+			res.sendFile(__dirname + '/HTML/login.html');
 		}
 });
 //	Handle user login request
-app.post("/loginAttempt", function(req, res) {
-	if (req.body.usr && req.body.pw) {
-		if (req.session !== undefined) {
-			console.log("Bereits eingeloggt als " + req.session.status);
-			res.redirect("/");
+app.post("/loginAttempt", async function(req, res) {
+	res.sendFile(__dirname + '/HTML/startseite-psychologe.html', function(er) {
+		if (er) {
+			res.status(er.status).end();
+		}
+		console.log("TESTAUSGABE");
+	});
+	/*
+	await console.log("LOGIN");
+	if (req.body.user && req.body.password) {
+		await console.log("READ JSON");
+		if (0) {
+			//console.log("Bereits eingeloggt als " + req.session.status);
+			//res.redirect("/");
 		}
 		else {
-			var usr = req.body.user;
-			var pwHash = req.body.password;
-
-			con.connect(function(err){
-				if(err) throw err;
-				con.query("SELECT * FROM Patientenlogin WHERE Username='" + usr + "'", function(err, result)
-				{
-					if (err) throw err;
-					console.log(result);
-				});
-			});
-
+			var usr = await req.body.user;
+			var pwHash = await req.body.password;
+			await console.log(usr + pwHash);
 			//	Database call to check credentials
-			res.sendFile(__dirname + '/login.html');
+			await con.connect(async function(error){
+				try{
+					await con.query("SELECT * FROM Patientenlogin WHERE Username='" + usr + "'", async function(errorQ, result)
+					{
+						try{
+							await console.log(result);
+							await res.sendFile(__dirname + '/HTML/startseite-psychologe.html');
+						} catch(errorQ) {
+							await console.log(errorQ);
+						}
+					});
+				}
+				catch (error){
+					console.log(error);
+				}
+
+
+			});
+			//console.log("AFTER CONNECT");
+
 		}
 	}
+	*/
 });
 
 app.get("/ausloggen", function (req, res) {
@@ -124,6 +144,8 @@ app.get("/ausloggen", function (req, res) {
 app.get("/ausloggen", function (req, res) {
 
 });
+
+app.use(express.static('HTML'));
 
 
 var options = {
