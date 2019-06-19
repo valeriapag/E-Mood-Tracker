@@ -17,6 +17,7 @@ function jsPost(postUrl, data) {
     var xhr = new XMLHttpRequest();
     //  On successful request -> popup
     xhr.onreadystatechange = function() {
+
         if (this.readyState == 4 && this.status == 401) {
             swal.fire({
                 title: 'Falsches Passwort!',

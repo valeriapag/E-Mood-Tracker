@@ -33,6 +33,7 @@ app.engine('.hbs', hbs({extname: '.hbs'}));
 app.set("view engine", "hbs");
 
 app.use(session({
+	UID: null,
 	secret: 'red sea',
 	name : 'sessToken',
 	resave: false,
