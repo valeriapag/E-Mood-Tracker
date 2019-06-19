@@ -1,5 +1,5 @@
-var StaticServer = require('node-static'); //Das Modul node-static für den Statischen Server wird geladen
-var file = new StaticServer.Server('./HTML'); //Die Dateien befinden sich auf dem statischen Server im Ordner public. (In diesem Fall die HTML-Dateien für unseren Webseite)
+//var StaticServer = require('node-static'); //Das Modul node-static für den Statischen Server wird geladen
+//var file = new StaticServer.Server('./HTML'); //Die Dateien befinden sich auf dem statischen Server im Ordner public. (In diesem Fall die HTML-Dateien für unseren Webseite)
 var https = require('https');
 var fs = require('fs');
 //Modul Express wird eingebunden
@@ -8,8 +8,10 @@ var express = require("express");
 var hbs = require("express-handlebars");
 //app wird für Konfiguration des Servers verwendet
 var app = express();
+var bodyparser = require('body-parser');
+var session = require('express-session');
 //	Generate ids
-var uuid = require('uuid');
+//var uuid = require('uuid');
 var mysql = require('mysql');
 
 var con = mysql.createConnection({
