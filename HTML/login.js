@@ -35,7 +35,7 @@ function jsPost(postUrl, data) {
                 type: 'success',
                 title: 'Erfolgreich eingeloggt!'
             });
-            document.write(xhr.responseText);
+            //document.write(xhr.responseText);
         }
     };
     xhr.open("POST", postUrl,true);
@@ -71,7 +71,8 @@ $(function(){
         var usr = $("#usr").val();
         var pw = $("#pw").val();
         //  server url
-        var url = "https://httpbin.org/post";
+        //var url = "https://httpbin.org/post";
+        var url = "https://localhost:8080/loginAttempt";
         var req = JSON.stringify({
             user: usr,
             password: pw
