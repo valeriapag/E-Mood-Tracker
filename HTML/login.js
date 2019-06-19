@@ -36,7 +36,7 @@ function jsPost(postUrl, data) {
                 type: 'success',
                 title: 'Erfolgreich eingeloggt!'
             });
-            //document.write(xhr.responseText);
+            document.write(xhr.responseText);
         }
     };
     xhr.open("POST", postUrl,true);

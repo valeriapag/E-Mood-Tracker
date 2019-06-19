@@ -89,7 +89,7 @@ app.post("/loginAttempt", function(req, res) {
 						if(result[i].Username == usr && result[i].passworthash == pwHash){
 							res.sendFile(__dirname + '/HTML/tagebuch.html');
 						} else if(result[i] == null){
-							console.log("Kein Patient vorhanden!")
+							console.log("Kein Patient vorhanden!");
 							break;
 						}
 					}
@@ -101,7 +101,7 @@ app.post("/loginAttempt", function(req, res) {
 						if(result[i].Username == usr && result[i].passworthash == pwHash){
 							res.sendFile(__dirname + '/HTML/startseite-psychologe.html');
 						} else if(result[i] == null){
-							console.log("Kein Psychologe vorhanden!")
+							console.log("Kein Psychologe vorhanden!");
 							break;
 						}
 					}
