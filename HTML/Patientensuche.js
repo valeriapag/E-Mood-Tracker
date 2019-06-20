@@ -16,7 +16,7 @@ function jsSearch(postUrl, data) {
     var xhr = new XMLHttpRequest();
     //  On successful request -> popup
     xhr.onreadystatechange = function() {
-        if (this.readyState == 4 && this.status == 200) {
+        if (this.readyState === 4 && this.status === 200) {
             swal.fire({
                 toast: true,
                 position: 'center',
@@ -26,6 +26,15 @@ function jsSearch(postUrl, data) {
                 title: 'Erfolgreich gesendet!'
             });
             document.write(xhr.responseText);
+        }
+        else if (this.readyState === 4 && this.status === 401) {
+            swal.fire({
+                title: 'Bitte Daten eingeben!',
+                type: 'error',
+                backdrop: 'true',
+                confirmButtonText: 'Ok'
+            });
+            $("#search").removeAttr('disabled').html('suchen');
         }
     };
     xhr.open("POST", postUrl,true);
@@ -68,7 +77,8 @@ $(function(){
         delete map["gen"];
 
         //  server url
-        var url = "https://httpbin.org/post";
+        //var url = "https://httpbin.org/post";
+        var url = "https://localhost:8080/patientSearch/";
         var reqJson = JSON.stringify(map);
 
         jsSearch(url, reqJson);

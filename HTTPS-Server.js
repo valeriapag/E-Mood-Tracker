@@ -183,16 +183,113 @@ app.get("/ausloggen", function (req, res) {
 		}
 	}
 	else {
+		console.log("not logged in");
 		res.redirect("/");
 	}
 });
 
+//	Handle patient search requests
 app.post("/patientSearch", function (req, res) {
+	console.log("Request for patient search received");
+	//	Collect values from request JSON
+	var map = {
+		Nachname: req.body.name,
+		Vorname: req.body.vorname,
+		Geburtsdatum: req.body.gbDatum,
+		Krankheit: req.body.illness,
+		Geschlecht: req.body.gender
+	};
+	//	Construct sql query string
+	let sqlQueryTemp = "SELECT * FROM Patient WHERE ";
+	let str = "";
+	let count = 0;
+	for (m in map){
+		if (map[m] === undefined) {
+			//	Don´t add to string array
 
+			//	Check if all values are undefined
+			count++;
+		}
+		else {
+			str = string(m) + "='" + string(map[m]) + "'";
+			sqlQueryTemp = sqlQueryTemp + str + " AND ";
+		}
+	}
+	if (count === 5) {
+		//	If all values are undefined
+		console.log("No input values");
+		res.sendStatus(401);
+	}
+	else {
+		let len = sqlQueryTemp.length;
+		let sqlQuery = sqlQueryTemp.slice(0,len-5);
+		sqlQuery = sqlQuery.trim();
+		console.log("Retrieving data for patient search");
+		con.query(sqlQuery, async function(err, result){
+			//	Same procedure as with patient
+			try {
+				await console.log(result);
+				await res.send(result);
+			}
+				//	Catch error during query handling
+			catch (err) {
+				await console.log(err);
+			}
+
+		});
+	}
 });
 
 app.post("/patientCreate", function (req, res) {
+	console.log("Request for create patient received");
+	//	Collect values from request JSON
+	var map = {
+		Nachname: req.body.name,
+		Vorname: req.body.vorname,
+		Geburtsdatum: req.body.gbdatum,
+		Krankheit: req.body.krankheit,
+		Geschlecht: req.body.gender,
 
+	};
+	//	Construct sql query string
+	let sqlQueryTemp = "SELECT * FROM Patient WHERE ";
+	let str = "";
+	let count = 0;
+	for (m in map){
+		if (map[m] === undefined) {
+			//	Don´t add to string array
+
+			//	Check if all values are undefined
+			count++;
+		}
+		else {
+			str = string(m) + "='" + string(map[m]) + "'";
+			sqlQueryTemp = sqlQueryTemp + str + " AND ";
+		}
+	}
+	if (count === 5) {
+		//	If all values are undefined
+		console.log("No input values");
+		res.sendStatus(401);
+	}
+	else {
+		let len = sqlQueryTemp.length;
+		let sqlQuery = sqlQueryTemp.slice(0,len-5);
+		sqlQuery = sqlQuery.trim();
+		console.log("Retrieving data for patient search");
+		con.query(sqlQuery, async function(err, result){
+			//	Same procedure as with patient
+			try {
+				await console.log(result);
+				await res.send(result);
+			}
+				//	Catch error during query handling
+			catch (err) {
+				await console.log(err);
+			}
+
+		});
+	}
 });
 
 app.get("/patientList", function (req, res) {
@@ -202,35 +299,16 @@ app.get("/patientList", function (req, res) {
 app.get("/getPats", function (req, res) {
 	if (req.session.status === "psychologist" && req.session.UID !== null) {
 		console.log("Retrieving patient list for psychologist startPage");
-		let sqlStringPat = "SELECT Vorname, Nachname, Notiz FROM Patient a, Tagebuch b WHERE a.PatientenID=b.PatientenID AND b.Notiz NOT NULL";
+		let sqlStringPat = "SELECT Vorname, Nachname, Notiz FROM Patient a, Tagebuch b WHERE a.PatientenID=b.PatientenID AND b.Notiz IS NOT NULL";
 		//	Mysql query handler function returns false if not found and true if found;
 		con.query(sqlStringPat, async function(err, result) {
 			try {
 				await console.log(result);
-				for (let i = 0; i < result.length; i++) {
-					if (result[i].Username === usr && result[i].passworthash === pwHash) {
-						//	Save patient id in cookie
-						req.session.dbId = result[i].PatientenID;
-						//	Generate unique time-based id for logged-in user and save in session cookie
-						req.session.UID = uuid.v1();
-						req.session.status = "patient";
-						await notfound = false;
-						await res.sendFile(__dirname + '/HTML/tagebuch.html');
-						return true;
-					}
-				}
-				//	Patient not found
-				if (notfound) {
-					await console.log("No patient found");
-					//	Send http 401 status
-					await res.sendStatus(401);
-					return false;
-				}
-
+				await res.send(result);
 			}
 				//	Catch error during query handling
 			catch (err) {
-				console.log(err);
+				await console.log(err);
 			}
 		});
 
