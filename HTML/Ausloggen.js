@@ -11,7 +11,7 @@ function jsLogout (url) {
     xhr.timeout = 3000;
     //  On successful request -> popup
     xhr.onreadystatechange = function() {
-        if (this.readyState == 4 && this.status == 200) {
+        if (this.readyState === 4 && this.status === 200) {
             swal.fire({
                 toast: true,
                 position: 'center',
@@ -19,6 +19,15 @@ function jsLogout (url) {
                 timer: 2000,
                 type: 'success',
                 title: 'Erfolgreich ausgeloggt!'
+            });
+            document.write(xhr.responseText);
+        }
+        else if (this.readyState === 4 && this.status === 500) {
+            swal.fire({
+                title: 'Server error!',
+                type: 'error',
+                backdrop: 'true',
+                confirmButtonText: 'Ok'
             });
         }
     };
@@ -60,7 +69,8 @@ $(function () {
             "class=\"spinner-border spinner-border-sm\" role=\"status\" aria-hidden=\"true\"></span>");
         // server url
         //var url = "http://www.google.com:81/";
-        var url = "https://httpbin.org/get";
+        //var url = "https://httpbin.org/get";
+        var url = "https://localhost:8080/";
         //  Redirect to login page if connection successful
         jsLogout(url);
     });

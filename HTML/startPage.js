@@ -14,7 +14,7 @@ function jsGetPatients(url) {
     var xhr = new XMLHttpRequest();
     //  On successful request -> popup
     xhr.onreadystatechange = function() {
-        if (this.readyState == 4 && this.status == 200) {
+        if (this.readyState === 4 && this.status === 200) {
             swal.fire({
                 toast: true,
                 position: 'center',
@@ -25,6 +25,10 @@ function jsGetPatients(url) {
             });
             var patArr = JSON.parse(xhr.responseText);
             return patArr;
+        }
+        else if (this.readyState === 4 && this.status === 401) {
+            document.write(xhr.responseText);
+            return null;
         }
     };
     xhr.open("GET", url,true);
@@ -49,11 +53,16 @@ function jsGetPatients(url) {
     Calls POST function if button clicked, changes to loading icon and back
  */
 $(function(){
-    var url = "";
+    var url = "https://localhost:8080/getPats";
     var patArr = jsGetPatients(url);
-    patArr.forEach(function(item) {
-        $("#notes").append('<p class="text-center" id="notes">' + item["fname"] + " " + item["name"] + " " +
-            item["patientId"] + '</p>');
-    });
+    if (patArr) {
+        patArr.forEach(function(item) {
+            $("#notes").append('<p class="text-center" id="notes">' + item["fname"] + " " + item["name"] + " " +
+                item["patientId"] + '</p>');
+        });
+    }
+    else {
+        //  Gets redirected by server
+    }
 });
 
