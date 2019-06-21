@@ -44,7 +44,7 @@ function jsLogout (url) {
         $("#logoutStart").removeAttr('disabled');
         $("#login").removeAttr('disabled').html('Login');
         $("#logoutLayout").removeAttr('disabled');
-        $("#patientLogout").removeAttr('disabled').html('Login');
+        $("#patientLogout").removeAttr('disabled').html('Ausloggen');
     };
     xhr.send();
 }
@@ -58,7 +58,7 @@ $(function () {
             "class=\"spinner-border spinner-border-sm\" role=\"status\" aria-hidden=\"true\"></span>");
         //  Send logout info to server
         //  server url /logout
-        var url = "https://httpbin.org/get";
+        var url = "https://localhost:8080/ausloggen";
         jsLogout(url);
     });
     //  On click: redirect to login page
@@ -80,7 +80,7 @@ $(function () {
         $("#logoutDrop").attr('disabled', 'disabled');
         //  Send logout info to server
         //  server url
-        var url = "https://httpbin.org/get";
+        var url = "https://localhost:8080/ausloggen";
         jsLogout(url);
     });
     //  On click (Dropdown menu): start logout procedure
@@ -89,7 +89,7 @@ $(function () {
         $("#diagLogout").attr('disabled', 'disabled');
         //  Send logout info to server
         //  server url
-        var url = "https://httpbin.org/get";
+        var url = "https://localhost:8080/ausloggen";
         jsLogout(url);
     });
     //  On click (Dropdown menu): start logout procedure
@@ -98,7 +98,7 @@ $(function () {
         $("#searchLogout").attr('disabled', 'disabled');
         //  Send logout info to server
         //  server url
-        var url = "https://httpbin.org/get";
+        var url = "https://localhost:8080/ausloggen";
         jsLogout(url);
     });
     $("#patientLogout").click(function(){
@@ -107,7 +107,7 @@ $(function () {
             "class=\"spinner-border spinner-border-sm\" role=\"status\" aria-hidden=\"true\"></span>");
         //  Send logout info to server
         //  server url
-        var url = "https://httpbin.org/get";
+        var url = "https://localhost:8080/ausloggen";
         jsLogout(url);
     });
 });

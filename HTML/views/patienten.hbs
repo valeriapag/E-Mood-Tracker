@@ -11,19 +11,21 @@
                             <th>ID</th>
                             <th>Vorname</th>
                             <th>Nachname</th>
-                            <th>Alter</th>
+                            <th>Geburtsdatum</th>
                             <th>Geschlecht</th>
                             <th>Krankheit</th>
+                            <th>PLZ</th>
                         </thead>
                         <tbody>
                             {{#each patienten}}
                                 <tr>
-                                    <td>{{id}}</td>
-                                    <td>{{vorname}}</td>
-                                    <td>{{nachname}}</td>
-                                    <td>{{alter}}</td>
-                                    <td>{{geschlecht}}</td>
-                                    <td>{{krankheit}}</td>
+                                    <td>{{PatientenID}}</td>
+                                    <td>{{Vorname}}</td>
+                                    <td>{{Nachname}}</td>
+                                    <td>{{Geburtsdatum}}</td>
+                                    <td>{{Geschlecht}}</td>
+                                    <td>{{Krankheit}}</td>
+                                    <td>{{PLZ}}</td>
                                 </tr>
                             {{/each}}
                         </tbody>

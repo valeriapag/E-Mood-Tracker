@@ -24,7 +24,7 @@ var app = express();
 var bodyparser = require('body-parser');
 //	Handle session cookies with express
 var session = require('express-session');
-//	Generate ids
+//	Generate ids with unique id (uuid) module
 var uuid = require('uuid');
 //	Mysql module for node.js
 var mysql = require('mysql');
@@ -50,6 +50,7 @@ app.set("view engine", "hbs");
 app.use(session({
 	UID: null,
 	status: null,
+	dbId: null,
 	secret: 'red sea',
 	name : 'sessToken',
 	resave: false,
@@ -58,7 +59,7 @@ app.use(session({
 
 //	Handle get request for login page
 app.get("/", function(req, res) {
-		if (req.session.UID !== null) {
+		if (req.session.UID != null) {
 			console.log("Already logged in as " + req.session.status);
 			res.redirect("/startPage");
 		}
@@ -67,11 +68,12 @@ app.get("/", function(req, res) {
 			res.sendFile(__dirname + '/HTML/login.html');
 		}
 });
+
 //	Handle user login request
 app.post("/loginAttempt", function(req, res) {
 	console.log("Login attempt");
 	if (req.body.user && req.body.password) {
-		if (req.session.UID !== null) {
+		if (req.session.UID != null) {
 			console.log("Already logged in as " + req.session.status);
 			res.redirect("/startPage");
 		}
@@ -82,69 +84,69 @@ app.post("/loginAttempt", function(req, res) {
 			//	SQL search strings for two login types
 			let sqlStringPat = "SELECT Username,passworthash,PatientenID FROM Patientenlogin";
 			let sqlStringPsych = "SELECT Username,passworthash,PsychologenID FROM Psychologenlogin";
-				//	Mysql query handler function returns false if not found and true if found;
-				let patFound = con.query(sqlStringPat, async function(err, result){
+			//	Mysql query handler function returns false if not found and true if found;
+			con.query(sqlStringPat, async function(err, result){
+				try {
+					let notfound = true;
+					await console.log(result);
+					for (let i = 0; i < result.length; i++) {
+						if (result[i].Username == usr && result[i].passworthash == pwHash) {
+							//	Save patient id in cookie
+							req.session.dbId = result[i].PatientenID;
+							//	Generate unique time-based id for logged-in user and save in session cookie
+							req.session.UID = uuid.v1();
+							req.session.status = "patient";
+							notfound = false;
+							console.log("Patient found, logging in ID " + req.session.dbId);
+							await res.sendFile(__dirname + '/HTML/tagebuch.html');
+						}
+					}
+					//	Patient not found
+					if (notfound) {
+						console.log("Not a patient");
+					}
+
+				}
+				//	Catch error during query handling
+				catch(err) {
+					console.log(err);
+				}
+			});
+			//	Check if a patient has been found, if not continue searching
+			console.log(res.headersSent);
+			if (res.headersSent)
+			{
+				con.query(sqlStringPsych, async function(err, result){
+					//	Same procedure as with patient
 					try {
 						let notfound = true;
 						await console.log(result);
-						for (let i = 0; i < result.length; i++) {
-							if (result[i].Username === usr && result[i].passworthash === pwHash) {
-								//	Save patient id in cookie
-								req.session.dbId = result[i].PatientenID;
+						for(let i = 0; i < result.length; i++){
+							if(result[i].Username == usr && result[i].passworthash == pwHash){
+								//	Save psychologist id in cookie
+								req.session.dbId = result[i].PsychologenID;
 								//	Generate unique time-based id for logged-in user and save in session cookie
 								req.session.UID = uuid.v1();
-								req.session.status = "patient";
-								await notfound = false;
-								await res.sendFile(__dirname + '/HTML/tagebuch.html');
-								return true;
+								req.session.status = "psychologist";
+								notfound = false;
+								console.log("Psychologist found, logging in ID " + req.session.dbId);
+								await res.sendFile(__dirname + '/HTML/startseite-psychologe.html');
+								break;
 							}
 						}
-						//	Patient not found
 						if (notfound) {
-							await console.log("No patient found");
+							await console.log("No psychologist found");
 							//	Send http 401 status
 							await res.sendStatus(401);
-							return false;
 						}
-
 					}
 					//	Catch error during query handling
-					catch(err) {
+					catch (err) {
 						console.log(err);
 					}
-				});
-				//	Check if a patient has been found, if not continue searching
-				if (!patFound)
-				{
-					con.query(sqlStringPsych, async function(err, result){
-						//	Same procedure as with patient
-						try {
-							let notfound = true;
-							await console.log(result);
-							for(let i = 0; i < result.length; i++){
-								if(result[i].Username === usr && result[i].passworthash === pwHash){
-									//	Save psychologist id in cookie
-									req.session.dbId = result[i].PatientenID;
-									//	Generate unique time-based id for logged-in user and save in session cookie
-									req.session.UID = uuid.v1();
-									req.session.status = "psychologist";
-									await notfound = false;
-									await res.sendFile(__dirname + '/HTML/startseite-psychologe.html');
-									break;
-								}
-							}
-							if (notfound) {
-								await console.log("No psychologist found");
-								await res.sendStatus(401);
-							}
-						}
-						//	Catch error during query handling
-						catch (err) {
-							console.log(err);
-						}
 
-					});
-				}
+				});
+			}
 
 		}
 	}
@@ -163,10 +165,10 @@ app.post("/loginAttempt", function(req, res) {
 });
 
 app.get("/startPage", function (req, res) {
-	if (req.session.status === "psychologist") {
+	if (req.session.status == "psychologist") {
 		res.sendFile(__dirname + '/HTML/startseite-psychologe.html');
 	}
-	else if (req.session.status === "patient") {
+	else if (req.session.status == "patient") {
 		res.sendFile(__dirname + '/HTML/tagebuch.html');
 	}
 	else {
@@ -177,9 +179,9 @@ app.get("/startPage", function (req, res) {
 //	Handle logout requests
 app.get("/ausloggen", function (req, res) {
 	console.log("logout attempt");
-	if (req.session.UID !== null) {
+	if (req.session.UID != null) {
 		try {
-			console.log("Logging out " + req.session.UID);
+			console.log("Logging out " + req.session.dbId);
 			console.log("User status: " + req.session.status);
 			//	Set user status and ids to null
 			req.session.dbId = null;
@@ -216,7 +218,7 @@ app.post("/patientSearch", function (req, res) {
 	let str = "";
 	let count = 0;
 	for (m in map){
-		if (map[m] === undefined) {
+		if (map[m] == undefined) {
 			//	Don´t add to string array
 
 			//	Check if all values are undefined
@@ -227,7 +229,7 @@ app.post("/patientSearch", function (req, res) {
 			sqlQueryTemp = sqlQueryTemp + str + " AND ";
 		}
 	}
-	if (count === 5) {
+	if (count == 5) {
 		//	If all values are undefined
 		console.log("No input values");
 		res.sendStatus(401);
@@ -241,13 +243,12 @@ app.post("/patientSearch", function (req, res) {
 			//	Same procedure as with patient
 			try {
 				await console.log(result);
-				await res.send(result);
+				await res.render('patienten', result);
 			}
 				//	Catch error during query handling
 			catch (err) {
 				await console.log(err);
 			}
-
 		});
 	}
 });
@@ -255,6 +256,8 @@ app.post("/patientSearch", function (req, res) {
 app.post("/patientCreate", function (req, res) {
 	console.log("Request for create patient received");
 	//	Collect values from request JSON
+
+	//	Patient Info
 	let map = {
 		Nachname: req.body.name,
 		Vorname: req.body.vorname,
@@ -271,20 +274,21 @@ app.post("/patientCreate", function (req, res) {
 		psychID: req.session.dbId
 	};
 
+	//	Patient login info
 	let pw = req.body.password;
 	let login = {
 		PatientenID: uuid.v1(),
 		Username:  req.body.username,
 		Passworthash: md5(pw)
 	};
-
-	let sqlQuery = "INSERT INTO Patient (PatientenID, Vorname , Nachname,Geburtsdatum, Geburtsort, Strasse, Hausnummer, PLZ, Ort, Email,Geschlecht, Krankheit, PsychologenID) VALUES ('" + map.patientId + "','" + map.Vorname + "','" + map.Nachname + "','" + map.Geburtsdatum + "','" + map.GeburtsOrt + "','" + map.Strasse + "','" + map.Hausnummer + "','" + map.PLZ + "','" + map.Ort + "','" + map.Email + "','" + map.Geschlecht + "','" + map.Krankheit + "','" + map.psychID + "')";
+	//	Insert patient and login info into DB
+	let sqlQueryPat = "INSERT INTO Patient (PatientenID, Vorname , Nachname,Geburtsdatum, Geburtsort, Strasse, Hausnummer, PLZ, Ort, Email,Geschlecht, Krankheit, PsychologenID) VALUES ('" + map.patientId + "','" + map.Vorname + "','" + map.Nachname + "','" + map.Geburtsdatum + "','" + map.GeburtsOrt + "','" + map.Strasse + "','" + map.Hausnummer + "','" + map.PLZ + "','" + map.Ort + "','" + map.Email + "','" + map.Geschlecht + "','" + map.Krankheit + "','" + map.psychID + "')";
+	let sqlQueryLogin = "INSERT INTO Patientenlogin (PatientenID, Username , Passworthash) VALUES ('" + map.patientId + "','" + login.Username + "','" + login.Passworthash +"')";
 	console.log("Creating patient");
-	con.query(sqlQuery, async function(err, result){
+	con.query(sqlQueryPat, async function(err, result){
 		//	Same procedure as with patient
 		try {
 			await console.log(result);
-			await res.redirect("/StartPage");
 		}
 			//	Catch error during query handling
 		catch (err) {
@@ -294,6 +298,20 @@ app.post("/patientCreate", function (req, res) {
 
 	});
 
+	con.query(sqlQueryLogin, async function(err, result){
+		//	Same procedure as with patient
+		try {
+			await console.log(result);
+		}
+			//	Catch error during query handling
+		catch (err) {
+			await console.log(err);
+			res.sendStatus(500);
+		}
+
+	});
+	//	Redirect back to Startpage
+	res.redirect("/startPage");
 });
 
 app.get("/cancel", function (req, res) {
@@ -304,8 +322,12 @@ app.get("/patientList", function (req, res) {
 
 });
 
+app.get("/patientID", function (req, res) {
+
+});
+
 app.get("/getPats", function (req, res) {
-	if (req.session.status === "psychologist" && req.session.UID !== null) {
+	if (req.session.status == "psychologist" && req.session.UID != null) {
 		console.log("Retrieving patient list for psychologist startPage");
 		let sqlStringPat = "SELECT Vorname, Nachname, Notiz FROM Patient a, Tagebuch b WHERE a.PatientenID=b.PatientenID AND b.Notiz IS NOT NULL";
 		//	Mysql query handler function returns false if not found and true if found;
@@ -324,7 +346,7 @@ app.get("/getPats", function (req, res) {
 	else {
 		console.log("Can´t retrieve patient list without psychologist credentials");
 		res.sendStatus(401);
-		if (req.session.status === "patient"){
+		if (req.session.status == "patient"){
 			res.sendFile(__dirname + '/HTML/tagebuch.html');
 		}
 	}
