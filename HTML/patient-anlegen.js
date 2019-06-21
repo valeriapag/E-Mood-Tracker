@@ -11,7 +11,7 @@ function jsCancel (url) {
     xhr.timeout = 3000;
     //  On successful request -> popup
     xhr.onreadystatechange = function() {
-        if (this.readyState == 4 && this.status == 200) {
+        if (this.readyState === 4 && this.status === 200) {
             swal.fire({
                 toast: true,
                 position: 'center',
@@ -20,6 +20,7 @@ function jsCancel (url) {
                 type: 'success',
                 title: 'Erfolgreich ausgeloggt!'
             });
+            document.write(xhr.responseText);
         }
     };
     //  Define function on timeout -> Show popup "Keine Verbindung"
@@ -30,8 +31,7 @@ function jsCancel (url) {
             backdrop: 'true',
             confirmButtonText: 'Ok'
         });
-        $("#cancel").removeAttr('disabled').html('Login');
-        $("#login").removeAttr('disabled').html('Login');
+        $("#cancel").removeAttr('disabled').html('Abbrechen');
     };
     xhr.send();
 }
@@ -43,7 +43,7 @@ function jsCreate (url, data) {
     xhr.timeout = 3000;
     //  On successful request -> popup
     xhr.onreadystatechange = function() {
-        if (this.readyState == 4 && this.status == 200) {
+        if (this.readyState === 4 && this.status === 200) {
             swal.fire({
                 toast: true,
                 position: 'center',
@@ -51,6 +51,15 @@ function jsCreate (url, data) {
                 timer: 2000,
                 type: 'success',
                 title: 'Erfolgreich ausgeloggt!'
+            });
+            document.write(xhr.responseText);
+        }
+        if (this.readyState === 4 && this.status === 500) {
+            swal.fire({
+                title: 'Interner Datenbankfehler!',
+                type: 'error',
+                backdrop: 'true',
+                confirmButtonText: 'Ok'
             });
         }
     };
@@ -62,8 +71,7 @@ function jsCreate (url, data) {
             backdrop: 'true',
             confirmButtonText: 'Ok'
         });
-        $("#cancel").removeAttr('disabled').html('Login');
-        $("#login").removeAttr('disabled').html('Login');
+        $("#genUser").removeAttr('disabled').html('Generiere Benutzer');
     };
     xhr.send(data);
 }
@@ -78,7 +86,8 @@ $(function () {
             "class=\"spinner-border spinner-border-sm\" role=\"status\" aria-hidden=\"true\"></span>");
         //  Send logout info to server
         //  server url /logout
-        var url = "https://httpbin.org/get";
+        //var url = "https://httpbin.org/get";
+        var url = "https://localhost:8080/cancel";
         jsCancel(url);
     });
     $("#genUser").click(function(){
@@ -101,7 +110,8 @@ $(function () {
         delete map["gen"];
 
         //  server url
-        var url = "https://httpbin.org/post";
+        //var url = "https://httpbin.org/post";
+        var url = "https://localhost:8080/patientCreate";
         var reqJson = JSON.stringify(map);
 
         jsCreate(url, reqJson);

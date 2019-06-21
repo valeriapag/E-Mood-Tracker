@@ -162,6 +162,18 @@ app.post("/loginAttempt", function(req, res) {
 	}
 });
 
+app.get("/startPage", function (req, res) {
+	if (req.session.status === "psychologist") {
+		res.sendFile(__dirname + '/HTML/startseite-psychologe.html');
+	}
+	else if (req.session.status === "patient") {
+		res.sendFile(__dirname + '/HTML/tagebuch.html');
+	}
+	else {
+		res.redirect("/");
+	}
+});
+
 //	Handle logout requests
 app.get("/ausloggen", function (req, res) {
 	console.log("logout attempt");
@@ -243,53 +255,49 @@ app.post("/patientSearch", function (req, res) {
 app.post("/patientCreate", function (req, res) {
 	console.log("Request for create patient received");
 	//	Collect values from request JSON
-	var map = {
+	let map = {
 		Nachname: req.body.name,
 		Vorname: req.body.vorname,
 		Geburtsdatum: req.body.gbdatum,
 		Krankheit: req.body.krankheit,
 		Geschlecht: req.body.gender,
-
+		GeburtsOrt: req.body.gbort,
+		Strasse: req.body.strasse,
+		Hausnummer: req.body.hausnummer,
+		PLZ: req.body.plz,
+		Ort: req.body.ort,
+		Email: req.body.email,
+		patientId: uuid.v1(),
+		psychID: req.session.dbId
 	};
-	//	Construct sql query string
-	let sqlQueryTemp = "SELECT * FROM Patient WHERE ";
-	let str = "";
-	let count = 0;
-	for (m in map){
-		if (map[m] === undefined) {
-			//	Don´t add to string array
 
-			//	Check if all values are undefined
-			count++;
-		}
-		else {
-			str = string(m) + "='" + string(map[m]) + "'";
-			sqlQueryTemp = sqlQueryTemp + str + " AND ";
-		}
-	}
-	if (count === 5) {
-		//	If all values are undefined
-		console.log("No input values");
-		res.sendStatus(401);
-	}
-	else {
-		let len = sqlQueryTemp.length;
-		let sqlQuery = sqlQueryTemp.slice(0,len-5);
-		sqlQuery = sqlQuery.trim();
-		console.log("Retrieving data for patient search");
-		con.query(sqlQuery, async function(err, result){
-			//	Same procedure as with patient
-			try {
-				await console.log(result);
-				await res.send(result);
-			}
-				//	Catch error during query handling
-			catch (err) {
-				await console.log(err);
-			}
+	let pw = req.body.password;
+	let login = {
+		PatientenID: uuid.v1(),
+		Username:  req.body.username,
+		Passworthash: md5(pw)
+	};
 
-		});
-	}
+	let sqlQuery = "INSERT INTO Patient (PatientenID, Vorname , Nachname,Geburtsdatum, Geburtsort, Strasse, Hausnummer, PLZ, Ort, Email,Geschlecht, Krankheit, PsychologenID) VALUES ('" + map.patientId + "','" + map.Vorname + "','" + map.Nachname + "','" + map.Geburtsdatum + "','" + map.GeburtsOrt + "','" + map.Strasse + "','" + map.Hausnummer + "','" + map.PLZ + "','" + map.Ort + "','" + map.Email + "','" + map.Geschlecht + "','" + map.Krankheit + "','" + map.psychID + "')";
+	console.log("Creating patient");
+	con.query(sqlQuery, async function(err, result){
+		//	Same procedure as with patient
+		try {
+			await console.log(result);
+			await res.redirect("/StartPage");
+		}
+			//	Catch error during query handling
+		catch (err) {
+			await console.log(err);
+			res.sendStatus(500);
+		}
+
+	});
+
+});
+
+app.get("/cancel", function (req, res) {
+	res.sendFile(__dirname + '/HTML/tagebuch.html');
 });
 
 app.get("/patientList", function (req, res) {
