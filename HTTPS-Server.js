@@ -37,6 +37,10 @@ var con = mysql.createConnection({
 	database: "EMoodTracker"
 });
 
+con.connect(function(err){	
+				if (err) throw err;
+});
+
 //	Configure bodyparser for use with json
 app.use(bodyparser.json());
 app.use(bodyparser.urlencoded({ extended: false }));
@@ -84,10 +88,11 @@ app.post("/loginAttempt", function(req, res) {
 			//	SQL search strings for two login types
 			let sqlStringPat = "SELECT Username,passworthash,PatientenID FROM Patientenlogin";
 			let sqlStringPsych = "SELECT Username,passworthash,PsychologenID FROM Psychologenlogin";
+			let notfound = true;
+
 			//	Mysql query handler function returns false if not found and true if found;
 			con.query(sqlStringPat, async function(err, result){
 				try {
-					let notfound = true;
 					await console.log(result);
 					for (let i = 0; i < result.length; i++) {
 						if (result[i].Username == usr && result[i].passworthash == pwHash) {
@@ -114,12 +119,11 @@ app.post("/loginAttempt", function(req, res) {
 			});
 			//	Check if a patient has been found, if not continue searching
 			console.log(res.headersSent);
-			if (res.headersSent)
+			if (notfound == true)
 			{
 				con.query(sqlStringPsych, async function(err, result){
 					//	Same procedure as with patient
 					try {
-						let notfound = true;
 						await console.log(result);
 						for(let i = 0; i < result.length; i++){
 							if(result[i].Username == usr && result[i].passworthash == pwHash){
@@ -164,6 +168,10 @@ app.post("/loginAttempt", function(req, res) {
 	}
 });
 
+app.post("/getSave", function (req, res){
+	console.log("HALLO");
+});
+
 app.get("/startPage", function (req, res) {
 	if (req.session.status == "psychologist") {
 		res.sendFile(__dirname + '/HTML/startseite-psychologe.html');
@@ -179,8 +187,6 @@ app.get("/startPage", function (req, res) {
 //	Handle logout requests
 app.get("/ausloggen", function (req, res) {
 	console.log("logout attempt");
-	if (req.session.UID != null) {
-		try {
 			console.log("Logging out " + req.session.dbId);
 			console.log("User status: " + req.session.status);
 			//	Set user status and ids to null
@@ -190,16 +196,7 @@ app.get("/ausloggen", function (req, res) {
 			//	Set cookie to expire
 			req.session.cookie.expires = new Date(0);
 			res.sendFile(__dirname + '/HTML/ausloggen.html');
-		} catch(err) {
-			//	Send status code for internal server error
-			res.sendStatus(500);
-			console.log(err);
-		}
-	}
-	else {
-		console.log("not logged in");
-		res.redirect("/");
-	}
+
 });
 
 //	Handle patient search requests
