@@ -171,8 +171,9 @@ app.post("/loginAttempt", function(req, res) {
 app.post("/getSave", function (req, res){
 	var datum = new Date();
 	var heute = datum.getDate() + (datum.getMonth()+ 1)+"/" + datum.getFullYear();
-	var insString = "'" + req.session.dbId + "'" + "," + "'" + "Ja" + "'" + "," + "'" + "Notiz" + "'" + "," + "'" + req.body.stimmung +  "'" + "," + "'" + req.body.schlafstimmung + "'" + "," + "'" + heute +  "'";
-	var sqlString = "INSERT INTO tagebuch (PatientenID, med, Notiz, Stimmung, Schlafstimmung, Datum) VALUES (" + insString + ")";
+	var insString = "'" + req.session.dbId + "'" + "," + "Notiz" + "'" + "," + "'" + req.body.stimmung +  "'" + "," + "'" + req.body.schlafstimmung + "'" + "," + "'" + heute +  "'";
+	var sqlString = "INSERT INTO tagebuch (PatientenID, Notiz, Stimmung, Schlafstimmung, Datum) VALUES (" + insString + ")";
+	console.log(sqlString);
 	con.query(sqlString,function(err,result){
 		if(err) throw err;
 	});
@@ -326,6 +327,11 @@ app.get("/patientList", function (req, res) {
 
 app.get("/patientID", function (req, res) {
 
+});
+
+app.get("/toSearchPage", async function (req, res) {
+	console.log("Redirecting to search page");
+	res.sendFile(__dirname + '/HTML/login.html');
 });
 
 app.get("/getPats", function (req, res) {

@@ -82,6 +82,10 @@ $(function (){
         //  server url
         //var url = "https://httpbin.org/get";
 		var url = "https://localhost:8080/getSave";
+		var jsonReq = json.stringify({
+           stimmung: radioId1,
+           schlafstimmung: radioId2
+        });
         jsLog(url, jsonReq);
     });
     $('#patientLogout').click(function(){

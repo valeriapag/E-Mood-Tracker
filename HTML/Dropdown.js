@@ -10,7 +10,7 @@ function jsSearchPage (url) {
     var xhr = new XMLHttpRequest();
     xhr.open("GET", url,true);
     //  Set timeout duration
-    xhr.timeout = 3000;
+    xhr.timeout = 5000;
     //  On successful request -> popup
     xhr.onreadystatechange = function() {
         if (this.readyState == 4 && this.status == 200) {
@@ -20,8 +20,9 @@ function jsSearchPage (url) {
                 showConfirmButton: false,
                 timer: 2000,
                 type: 'success',
-                title: 'Erfolgreich ausgeloggt!'
+                title: 'Leite weiter zur Suche'
             });
+            document.write(xhr.responseText);
         }
     };
     //  Define function on timeout -> Show popup "Keine Verbindung"
@@ -91,8 +92,9 @@ $(function () {
     });
     $("#searchPage3").click(function(){
         //  Disable dropdown button
-        $("#searchPage3").attr('disabled', 'disabled');
+        //$("#searchPage3").attr('disabled', 'disabled');
         var url = "https://httpbin.org/get";
+        //var url = "https://localhost:8080/toSearchPage";
         jsSearchPage(url);
     });
     //  On click: redirect to create patient page
