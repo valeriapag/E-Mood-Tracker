@@ -5,7 +5,7 @@
  */
 function jsLog (url, data) {
     var xhr = new XMLHttpRequest();
-    xhr.open("GET", url,true);
+    xhr.open("POST", url,true);
     //  Set timeout duration
     xhr.timeout = 3000;
     //  On successful request -> popup
@@ -80,7 +80,8 @@ $(function (){
         $("#save").attr('disabled', 'disabled');
         //  Send logout info to server
         //  server url
-        var url = "https://httpbin.org/get";
+        //var url = "https://httpbin.org/get";
+		var url = "https://localhost:8080/getSave";
         jsLog(url, jsonReq);
     });
     $('#patientLogout').click(function(){
