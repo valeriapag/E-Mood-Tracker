@@ -169,7 +169,13 @@ app.post("/loginAttempt", function(req, res) {
 });
 
 app.post("/getSave", function (req, res){
-	console.log("HALLO");
+	var datum = new Date();
+	var heute = datum.getDate() + (datum.getMonth()+ 1)+"/" + datum.getFullYear();
+	var insString = "'" + req.session.dbId + "'" + "," + "'" + "Ja" + "'" + "," + "'" + "Notiz" + "'" + "," + "'" + req.body.stimmung +  "'" + "," + "'" + req.body.schlafstimmung + "'" + "," + "'" + heute +  "'";
+	var sqlString = "INSERT INTO tagebuch (PatientenID, med, Notiz, Stimmung, Schlafstimmung, Datum) VALUES (" + insString + ")";
+	con.query(sqlString,function(err,result){
+		if(err) throw err;
+	});
 });
 
 app.get("/startPage", function (req, res) {
@@ -178,8 +184,7 @@ app.get("/startPage", function (req, res) {
 	}
 	else if (req.session.status == "patient") {
 		res.sendFile(__dirname + '/HTML/tagebuch.html');
-	}
-	else {
+	}else{
 		res.redirect("/");
 	}
 });
@@ -338,7 +343,6 @@ app.get("/getPats", function (req, res) {
 				await console.log(err);
 			}
 		});
-
 	}
 	else {
 		console.log("Can´t retrieve patient list without psychologist credentials");
