@@ -15,19 +15,10 @@
  */
 function jsPost(postUrl, data) {
     var xhr = new XMLHttpRequest();
+    xhr.responseType = "document";
     //  On successful request -> popup
     xhr.onreadystatechange = function() {
-
-        if (this.readyState == 4 && this.status == 401) {
-            swal.fire({
-                title: 'Falsches Passwort!',
-                type: 'error',
-                backdrop: 'true',
-                confirmButtonText: 'Ok'
-            });
-            $("#load").removeAttr('disabled').html('Login');
-        }
-        else if (this.readyState == 4 && this.status == 200) {
+        if (this.readyState == 4 && this.status == 200) {
             swal.fire({
                 toast: true,
                 position: 'center',
@@ -36,7 +27,16 @@ function jsPost(postUrl, data) {
                 type: 'success',
                 title: 'Erfolgreich eingeloggt!'
             });
-            document.write(xhr.responseText);
+            $("#test").append(xhr.responseText);
+        }
+        else if (this.readyState == 4 && this.status == 401) {
+            swal.fire({
+                title: 'Falsches Passwort!',
+                type: 'error',
+                backdrop: 'true',
+                confirmButtonText: 'Ok'
+            });
+            $("#load").removeAttr('disabled').html('Login');
         }
     };
     xhr.open("POST", postUrl,true);
@@ -53,17 +53,18 @@ function jsPost(postUrl, data) {
         });
         $("#load").removeAttr('disabled').html('Login');
     };
-    xhr.send(data);
+    xhr.send(data)
 }
 
 /*
     Calls POST function if button clicked, changes to loading icon and back
  */
-$(function(){
+$(document).ready(function () {
     //  Get button element
     var $btn = $('#load');
     //  On click: start authentication
-    $btn.click(function(){
+    $btn.click(function () {
+        var a = document.readyState;
         var $this = $(this);
         //  Change to loading icon and disable button
         $this.attr('disabled', 'disabled').html("<span " +

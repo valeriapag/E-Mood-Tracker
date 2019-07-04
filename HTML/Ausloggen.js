@@ -49,65 +49,63 @@ function jsLogout (url) {
     xhr.send();
 }
 
-$(function () {
-    //  On click: start logout procedure
-    $('#logoutDiag').click(function(){
-        var $this = $(this);
-        //  Change to loading icon and disable button
-        $this.attr('disabled', 'disabled').html("<span " +
-            "class=\"spinner-border spinner-border-sm\" role=\"status\" aria-hidden=\"true\"></span>");
-        //  Send logout info to server
-        //  server url /logout
-        var url = "https://localhost:8080/ausloggen";
-        jsLogout(url);
-    });
-    //  On click: redirect to login page
-    $('#login').click(function(){
-        var $this = $(this);
-        //  Change to loading icon and disable button
-        $this.attr('disabled', 'disabled').html("<span " +
-            "class=\"spinner-border spinner-border-sm\" role=\"status\" aria-hidden=\"true\"></span>");
-        // server url
-        //var url = "http://www.google.com:81/";
-        //var url = "https://httpbin.org/get";
-        var url = "https://localhost:8080/";
-        //  Redirect to login page if connection successful
-        jsLogout(url);
-    });
-    //  On click (Dropdown menu): start logout procedure
-    $("#logoutStart").click(function(){
-        //  Disable dropdown button
-        $("#logoutDrop").attr('disabled', 'disabled');
-        //  Send logout info to server
-        //  server url
-        var url = "https://localhost:8080/ausloggen";
-        jsLogout(url);
-    });
-    //  On click (Dropdown menu): start logout procedure
-    $("#logoutLayout").click(function(){
-        //  Disable dropdown button
-        $("#diagLogout").attr('disabled', 'disabled');
-        //  Send logout info to server
-        //  server url
-        var url = "https://localhost:8080/ausloggen";
-        jsLogout(url);
-    });
-    //  On click (Dropdown menu): start logout procedure
-    $("#logoutSearch").click(function(){
-        //  Disable dropdown button
-        $("#searchLogout").attr('disabled', 'disabled');
-        //  Send logout info to server
-        //  server url
-        var url = "https://localhost:8080/ausloggen";
-        jsLogout(url);
-    });
-    $("#patientLogout").click(function(){
-        //  Disable button and show spinner
-        $("#patientLogout").attr('disabled', 'disabled').html("<span " +
-            "class=\"spinner-border spinner-border-sm\" role=\"status\" aria-hidden=\"true\"></span>");
-        //  Send logout info to server
-        //  server url
-        var url = "https://localhost:8080/ausloggen";
-        jsLogout(url);
-    });
+//  On click: start logout procedure
+$('#logoutDiag').click(function(){
+    var $this = $(this);
+    //  Change to loading icon and disable button
+    $this.attr('disabled', 'disabled').html("<span " +
+        "class=\"spinner-border spinner-border-sm\" role=\"status\" aria-hidden=\"true\"></span>");
+    //  Send logout info to server
+    //  server url /logout
+    var url = "https://localhost:8080/ausloggen";
+    jsLogout(url);
+});
+//  On click: redirect to login page
+$('#login').click(function(){
+    var $this = $(this);
+    //  Change to loading icon and disable button
+    $this.attr('disabled', 'disabled').html("<span " +
+        "class=\"spinner-border spinner-border-sm\" role=\"status\" aria-hidden=\"true\"></span>");
+    // server url
+    //var url = "http://www.google.com:81/";
+    //var url = "https://httpbin.org/get";
+    var url = "https://localhost:8080/";
+    //  Redirect to login page if connection successful
+    jsLogout(url);
+});
+//  On click (Dropdown menu): start logout procedure
+$("#logoutStart").click(function(){
+    //  Disable dropdown button
+    $("#logoutDrop").attr('disabled', 'disabled');
+    //  Send logout info to server
+    //  server url
+    var url = "https://localhost:8080/ausloggen";
+    jsLogout(url);
+});
+//  On click (Dropdown menu): start logout procedure
+$("#logoutLayout").click(function(){
+    //  Disable dropdown button
+    $("#diagLogout").attr('disabled', 'disabled');
+    //  Send logout info to server
+    //  server url
+    var url = "https://localhost:8080/ausloggen";
+    jsLogout(url);
+});
+//  On click (Dropdown menu): start logout procedure
+$("#logoutSearch").click(function(){
+    //  Disable dropdown button
+    $("#searchLogout").attr('disabled', 'disabled');
+    //  Send logout info to server
+    //  server url
+    var url = "https://localhost:8080/ausloggen";
+    jsLogout(url);
+});
+$("#patientLogout").click(function(){
+    //  Disable button and show spinner
+    $("#patientLogout").attr('disabled', 'disabled').html("<span " +
+        "class=\"spinner-border spinner-border-sm\" role=\"status\" aria-hidden=\"true\"></span>");
+    //  Send logout info to server
+    //  server url
+    var url = "https://localhost:8080/ausloggen";
+    jsLogout(url);
 });

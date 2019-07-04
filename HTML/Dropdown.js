@@ -73,7 +73,6 @@ function jsCreatePage (url) {
     xhr.send();
 }
 
-$(function () {
     //  On click: redirect to search patient page
     $('#searchPage1').click(function () {
         var $this = $(this);
@@ -117,4 +116,3 @@ $(function () {
         var url = "https://httpbin.org/get";
         jsCreatePage(url);
     });
-});

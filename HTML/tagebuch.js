@@ -68,7 +68,7 @@ function jsPatLogout (url) {
     xhr.send();
 }
 
-$(function (){
+
     $('#save').click(function(){
         var radioId1 = $('input[name=optradio1]:checked').val();
         var radioId2 = $('input[name=optradio2]:checked').val();
@@ -96,4 +96,3 @@ $(function (){
         var url = "https://httpbin.org/get";
         jsPatLogout(url);
     });
-});

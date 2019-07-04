@@ -10,10 +10,10 @@
 /*
     Function for http POST request to server
  */
-function jsGetPatients(url) {
+async function jsGetPatients(url) {
     var xhr = new XMLHttpRequest();
     //  On successful request -> popup
-    xhr.onreadystatechange = function() {
+    xhr.onreadystatechange = async function() {
         if (this.readyState === 4 && this.status === 200) {
             swal.fire({
                 toast: true,
@@ -21,14 +21,16 @@ function jsGetPatients(url) {
                 showConfirmButton: false,
                 timer: 2000,
                 type: 'success',
-                title: 'Erfolgreich gesendet!'
+                title: "Liste erfolgreich geladen"
             });
-            var patArr = JSON.parse(xhr.responseText);
-            return patArr;
+            var patArr = await JSON.parse(xhr.responseText);
+            await patArr.forEach(function(item) {
+                $("#notes").append('<p class="text-center">' + item["Vorname"] + " " + item["Nachname"] + " " +
+                    item["Notiz"] + '</p>');
+            });
         }
         else if (this.readyState === 4 && this.status === 401) {
             document.write(xhr.responseText);
-            return null;
         }
     };
     xhr.open("GET", url,true);
@@ -49,20 +51,9 @@ function jsGetPatients(url) {
     xhr.send();
 }
 
-/*
-    Calls POST function if button clicked, changes to loading icon and back
- */
-$(function(){
+
     var url = "https://localhost:8080/getPats";
-    var patArr = jsGetPatients(url);
-    if (patArr) {
-        patArr.forEach(function(item) {
-            $("#notes").append('<p class="text-center">' + item["fname"] + " " + item["name"] + " " +
-                item["patientId"] + '</p>');
-        });
-    }
-    else {
-        //  Gets redirected by server
-    }
-});
+    jsGetPatients(url);
+
+
 

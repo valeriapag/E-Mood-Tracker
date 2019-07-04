@@ -77,43 +77,42 @@ function jsCreate (url, data) {
 }
 
 
-$(function () {
-    //  On click: start logout procedure
-    $('#cancel').click(function(){
-        var $this = $(this);
-        //  Change to loading icon and disable button
-        $this.attr('disabled', 'disabled').html("<span " +
-            "class=\"spinner-border spinner-border-sm\" role=\"status\" aria-hidden=\"true\"></span>");
-        //  Send logout info to server
-        //  server url /logout
-        //var url = "https://httpbin.org/get";
-        var url = "https://localhost:8080/cancel";
-        jsCancel(url);
+
+//  On click: start logout procedure
+$('#cancel').click(function(){
+    var $this = $(this);
+    //  Change to loading icon and disable button
+    $this.attr('disabled', 'disabled').html("<span " +
+        "class=\"spinner-border spinner-border-sm\" role=\"status\" aria-hidden=\"true\"></span>");
+    //  Send logout info to server
+    //  server url /logout
+    //var url = "https://httpbin.org/get";
+    var url = "https://localhost:8080/cancel";
+    jsCancel(url);
+});
+$("#genUser").click(function(){
+    var $this = $(this);
+    //  Change to loading icon and disable button
+    $this.attr('disabled', 'disabled').html("<span " +
+        "class=\"spinner-border spinner-border-sm\" role=\"status\" aria-hidden=\"true\"></span>");
+    //  Get patient data input
+    var map = {};
+    $(".form-control").each(function() {
+        map[$(this).attr("name")] = $(this).val();
     });
-    $("#genUser").click(function(){
-        var $this = $(this);
-        //  Change to loading icon and disable button
-        $this.attr('disabled', 'disabled').html("<span " +
-            "class=\"spinner-border spinner-border-sm\" role=\"status\" aria-hidden=\"true\"></span>");
-        //  Get patient data input
-        var map = {};
-        $(".form-control").each(function() {
-            map[$(this).attr("name")] = $(this).val();
-        });
 
-        //  Add key/values for gender and medicine
-        var meds = $("#dm2 option:selected").val();
-        var gender = $("#dm1 option:selected").text();
-        map["medicine"] = meds;
-        map["gender"] = gender;
-        delete map["meds"];
-        delete map["gen"];
+    //  Add key/values for gender and medicine
+    var meds = $("#dm2 option:selected").val();
+    var gender = $("#dm1 option:selected").text();
+    map["medicine"] = meds;
+    map["gender"] = gender;
+    delete map["meds"];
+    delete map["gen"];
 
-        //  server url
-        //var url = "https://httpbin.org/post";
-        var url = "https://localhost:8080/patientCreate";
-        var reqJson = JSON.stringify(map);
+    //  server url
+    //var url = "https://httpbin.org/post";
+    var url = "https://localhost:8080/patientCreate";
+    var reqJson = JSON.stringify(map);
 
-        jsCreate(url, reqJson);
-    });
+    jsCreate(url, reqJson);
 });

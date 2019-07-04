@@ -46,8 +46,8 @@ app.use(bodyparser.json());
 app.use(bodyparser.urlencoded({ extended: false }));
 
 //	Set view folder and engine to render patient list
-app.set("views", __dirname + "/views");
-app.engine('.hbs', hbs({extname: '.hbs'}));
+app.set("views", __dirname + "/HTML/views");
+app.engine("hbs", hbs({extname : "hbs", defaultLayout: "layout", layoutsDir: __dirname + "/HTML/views/layouts"}));
 app.set("view engine", "hbs");
 
 //	Set session cookies
@@ -65,7 +65,7 @@ app.use(session({
 app.get("/", function(req, res) {
 		if (req.session.UID != null) {
 			console.log("Already logged in as " + req.session.status);
-			res.redirect("/startPage");
+			res.sendFile(__dirname + '/HTML/startseite-psychologe.html');
 		}
 		else {
 			console.log("Sending login HTML page");
@@ -79,7 +79,7 @@ app.post("/loginAttempt", function(req, res) {
 	if (req.body.user && req.body.password) {
 		if (req.session.UID != null) {
 			console.log("Already logged in as " + req.session.status);
-			res.redirect("/startPage");
+			res.sendFile(__dirname + '/HTML/startseite-psychologe.html');
 		}
 		else {
 			//	Get username and password from http body
@@ -103,7 +103,9 @@ app.post("/loginAttempt", function(req, res) {
 							req.session.status = "patient";
 							notfound = false;
 							console.log("Patient found, logging in ID " + req.session.dbId);
-							await res.redirect("/startPage");
+							//await res.redirect("/startPage");
+							res.sendFile(__dirname + '/HTML/tagebuch.html');
+							break;
 						}
 					}
 					//	Patient not found
@@ -134,7 +136,8 @@ app.post("/loginAttempt", function(req, res) {
 								req.session.status = "psychologist";
 								notfound = false;
 								console.log("Psychologist found, logging in ID " + req.session.dbId);
-								await res.redirect('/startPage');
+								//await res.redirect('/startPage');
+								res.sendFile(__dirname + '/HTML/startseite-psychologe.html');
 								break;
 							}
 						}
@@ -180,27 +183,21 @@ app.post("/getSave", function (req, res){
 		if(err) throw err;
 	});
 });
-
-app.get("/startPage", function (req, res) {
+/*
+app.get("/startPage", async function (req, res) {
 	console.log(req.session);
-	if (req.session.status == "psychologist") {
-		res.redirect("/startseite-psychologe");
+	if (req.session.status === "psychologist") {
+		await console.log("psychologist");
+		await res.sendFile(__dirname + '/HTML/startseite-psychologe.html');
 	}
-	else if (req.session.status == "patient") {
-		res.redirect("/tagebuch");
+	else if (req.session.status === "patient") {
+		await console.log("patient");
+		await res.sendFile(__dirname + '/HTML/tagebuch.html');
 	}else{
 		res.redirect("/");
 	}
 });
-
-app.get("/tagebuch", function (req, res) {
-	res.sendFile(__dirname + '/HTML/tagebuch.html');
-});
-
-app.get("/startseite-psychologe", function (req, res) {
-	res.sendFile(__dirname + '/HTML/startseite-psychologe.html');
-});
-
+*/
 //	Handle logout requests
 app.get("/ausloggen", function (req, res) {
 	console.log("logout attempt");
@@ -217,29 +214,33 @@ app.get("/ausloggen", function (req, res) {
 });
 
 //	Handle patient search requests
-app.post("/patientSearch", function (req, res) {
-	console.log("Request for patient search received");
+app.post("/patientSearch", async function (req, res) {
+	await console.log("Request for patient search received");
+	await console.log(req.body);
 	//	Collect values from request JSON
-	var map = {
-		Nachname: req.body.name,
-		Vorname: req.body.vorname,
-		Geburtsdatum: req.body.gbDatum,
-		Krankheit: req.body.illness,
-		Geschlecht: req.body.gender
+	var map = await {
+		Nachname: req.body.Nachname,
+		Vorname: req.body.Vorname,
+		Geburtsdatum: req.body.Geburtsdatum,
+		Krankheit: req.body.Krankheit,
+		Geschlecht: req.body.Geschlecht
 	};
 	//	Construct sql query string
 	let sqlQueryTemp = "SELECT * FROM Patient WHERE ";
 	let str = "";
 	let count = 0;
-	for (m in map){
-		if (map[m] == undefined) {
+	var Keys = Object.keys(map);
+	console.log(Keys);
+	for (m in Keys){
+		if (map[Keys[m]] == "") {
 			//	Don´t add to string array
 
 			//	Check if all values are undefined
 			count++;
 		}
 		else {
-			str = string(m) + "='" + string(map[m]) + "'";
+			console.log(Keys[m]);
+			str = String(Keys[m]) + "='" + String(map[Keys[m]]) + "'";
 			sqlQueryTemp = sqlQueryTemp + str + " AND ";
 		}
 	}
@@ -249,10 +250,12 @@ app.post("/patientSearch", function (req, res) {
 		res.sendStatus(401);
 	}
 	else {
-		let len = sqlQueryTemp.length;
-		let sqlQuery = sqlQueryTemp.slice(0,len-5);
-		sqlQuery = sqlQuery.trim();
-		console.log("Retrieving data for patient search");
+		console.log(sqlQueryTemp);
+		let len = await sqlQueryTemp.length;
+		let sqlQuery = await sqlQueryTemp.slice(0,len-5);
+		sqlQuery = await sqlQuery.trim();
+		await console.log(sqlQuery);
+		await console.log("Retrieving data for patient search");
 		con.query(sqlQuery, async function(err, result){
 			//	Same procedure as with patient
 			try {
@@ -332,18 +335,25 @@ app.get("/cancel", function (req, res) {
 	res.sendFile(__dirname + '/HTML/tagebuch.html');
 });
 
-app.get("/patientList", function (req, res) {
-
-});
-
 app.get("/patientID", function (req, res) {
 
 });
 
 app.get("/toSearchPage", async function (req, res) {
 	console.log("Redirecting to search page");
+	res.redirect("/sPage")
+});
+
+app.get("/sPage", async function (req, res) {
 	res.sendFile(__dirname + '/HTML/patientensuche.html');
 });
+
+app.get("/toPatientList", async function (req, res) {
+	console.log("Redirecting to search page");
+	res.redirect("/sPage")
+});
+
+
 
 app.get("/getPats", function (req, res) {
 	console.log("Trying to get patient notes");

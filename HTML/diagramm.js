@@ -36,7 +36,7 @@ function jsGetData (url, req) {
 }
 
 //  Function on page ready, plot diagram with patient data
-$(function() {
+
     var patId = "";
     //var url = "https://httpbin.org/post";
     var url = "https://localhost:8080/patientList";
@@ -113,4 +113,3 @@ $(function() {
         $("#patNote").append('<p>' + i + '. ' + item["note"] + '</p>');
     });
     */
-});
