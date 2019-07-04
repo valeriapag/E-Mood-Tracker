@@ -30,7 +30,7 @@ con.connect(function(err) {
     if (err) throw err;
     console.log("Patientenlogin Table created");
   });
-  var sql2 = "CREATE TABLE Tagebuch (PatientenID VARCHAR(25), med VARCHAR(10), Notiz VARCHAR(25), Stimmung Integer, Schlafstimmung Integer, Datum Date)";
+  var sql2 = "CREATE TABLE Tagebuch (PatientenID VARCHAR(25), med VARCHAR(10), Notiz VARCHAR(25), Stimmung Integer, Schlafstimmung Integer, Datum VARCHAR(15))";
   con1.query(sql2, function (err, result) {
     if (err) throw err;
     console.log("Tagebuch Table created");
