@@ -75,7 +75,7 @@ function jsCreatePage (url) {
 
 $(function () {
     //  On click: redirect to search patient page
-    $('#searchPage1').click(function(){
+    $('#searchPage1').click(function () {
         var $this = $(this);
         //  Disable dropdown button
         $this.attr('disabled', 'disabled');
@@ -84,38 +84,37 @@ $(function () {
         var url = "https://httpbin.org/get";
         jsSearchPage(url);
     });
-    $("#searchPage2").click(function(){
+    $("#searchPage2").click(function () {
         //  Disable dropdown button
         $("#searchPage2").attr('disabled', 'disabled');
         var url = "https://httpbin.org/get";
         jsSearchPage(url);
     });
-    $("#searchPage3").click(function(){
+    $("#searchPage3").click(function () {
         //  Disable dropdown button
         //$("#searchPage3").attr('disabled', 'disabled');
-        var url = "https://httpbin.org/get";
-        //var url = "https://localhost:8080/toSearchPage";
+        //var url = "https://httpbin.org/get";
+        var url = "https://localhost:8080/toSearchPage";
         jsSearchPage(url);
     });
     //  On click: redirect to create patient page
-    $('#createPage1').click(function(){
+    $('#createPage1').click(function () {
         var $this = $(this);
         $this.attr('disabled', 'disabled');
         // server url
         var url = "https://httpbin.org/get";
         jsCreatePage(url);
     });
-    $("#createPage2").click(function(){
+    $("#createPage2").click(function () {
         //  Disable dropdown button
         $("#createPage2").attr('disabled', 'disabled');
         var url = "https://httpbin.org/get";
         jsCreatePage(url);
     });
-    $("#createPage3").click(function(){
+    $("#createPage3").click(function () {
         //  Disable dropdown button
         $("#createPage3").attr('disabled', 'disabled');
         var url = "https://httpbin.org/get";
         jsCreatePage(url);
     });
-
 });

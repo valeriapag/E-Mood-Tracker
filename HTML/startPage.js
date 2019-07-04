@@ -46,7 +46,7 @@ function jsGetPatients(url) {
         });
     };
 
-    xhr.send(data);
+    xhr.send();
 }
 
 /*
@@ -57,7 +57,7 @@ $(function(){
     var patArr = jsGetPatients(url);
     if (patArr) {
         patArr.forEach(function(item) {
-            $("#notes").append('<p class="text-center" id="notes">' + item["fname"] + " " + item["name"] + " " +
+            $("#notes").append('<p class="text-center">' + item["fname"] + " " + item["name"] + " " +
                 item["patientId"] + '</p>');
         });
     }

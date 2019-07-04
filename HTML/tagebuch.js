@@ -6,6 +6,7 @@
 function jsLog (url, data) {
     var xhr = new XMLHttpRequest();
     xhr.open("POST", url,true);
+    xhr.setRequestHeader("Content-type", "application/json");
     //  Set timeout duration
     xhr.timeout = 3000;
     //  On successful request -> popup
@@ -17,7 +18,7 @@ function jsLog (url, data) {
                 showConfirmButton: false,
                 timer: 2000,
                 type: 'success',
-                title: 'Erfolgreich ausgeloggt!'
+                title: 'Erfolgreich uebertragen!'
             });
         }
     };
@@ -82,7 +83,7 @@ $(function (){
         //  server url
         //var url = "https://httpbin.org/get";
 		var url = "https://localhost:8080/getSave";
-		var jsonReq = json.stringify({
+		var jsonReq = JSON.stringify({
            stimmung: radioId1,
            schlafstimmung: radioId2
         });

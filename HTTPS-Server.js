@@ -103,7 +103,7 @@ app.post("/loginAttempt", function(req, res) {
 							req.session.status = "patient";
 							notfound = false;
 							console.log("Patient found, logging in ID " + req.session.dbId);
-							await res.sendFile(__dirname + '/HTML/tagebuch.html');
+							await res.redirect("/startPage");
 						}
 					}
 					//	Patient not found
@@ -134,7 +134,7 @@ app.post("/loginAttempt", function(req, res) {
 								req.session.status = "psychologist";
 								notfound = false;
 								console.log("Psychologist found, logging in ID " + req.session.dbId);
-								await res.sendFile(__dirname + '/HTML/startseite-psychologe.html');
+								await res.redirect('/startPage');
 								break;
 							}
 						}
@@ -169,9 +169,11 @@ app.post("/loginAttempt", function(req, res) {
 });
 
 app.post("/getSave", function (req, res){
+	console.log("Trying to save patient data");
 	var datum = new Date();
-	var heute = datum.getDate() + (datum.getMonth()+ 1)+"/" + datum.getFullYear();
-	var insString = "'" + req.session.dbId + "'" + "," + "Notiz" + "'" + "," + "'" + req.body.stimmung +  "'" + "," + "'" + req.body.schlafstimmung + "'" + "," + "'" + heute +  "'";
+	var heute = datum.getDate() + "/" + (datum.getMonth()+ 1)+"/" + datum.getFullYear();
+	var insString = "'" + req.session.dbId + "'" + "," + "'" + "Notiz" + "'" + "," + "'" + req.body.stimmung +  "'" + "," + "'" + req.body.schlafstimmung + "'" + "," + "'" + heute + "'";
+	console.log(insString);
 	var sqlString = "INSERT INTO tagebuch (PatientenID, Notiz, Stimmung, Schlafstimmung, Datum) VALUES (" + insString + ")";
 	console.log(sqlString);
 	con.query(sqlString,function(err,result){
@@ -180,14 +182,23 @@ app.post("/getSave", function (req, res){
 });
 
 app.get("/startPage", function (req, res) {
+	console.log(req.session);
 	if (req.session.status == "psychologist") {
-		res.sendFile(__dirname + '/HTML/startseite-psychologe.html');
+		res.redirect("/startseite-psychologe");
 	}
 	else if (req.session.status == "patient") {
-		res.sendFile(__dirname + '/HTML/tagebuch.html');
+		res.redirect("/tagebuch");
 	}else{
 		res.redirect("/");
 	}
+});
+
+app.get("/tagebuch", function (req, res) {
+	res.sendFile(__dirname + '/HTML/tagebuch.html');
+});
+
+app.get("/startseite-psychologe", function (req, res) {
+	res.sendFile(__dirname + '/HTML/startseite-psychologe.html');
 });
 
 //	Handle logout requests
@@ -331,10 +342,11 @@ app.get("/patientID", function (req, res) {
 
 app.get("/toSearchPage", async function (req, res) {
 	console.log("Redirecting to search page");
-	res.sendFile(__dirname + '/HTML/login.html');
+	res.sendFile(__dirname + '/HTML/patientensuche.html');
 });
 
 app.get("/getPats", function (req, res) {
+	console.log("Trying to get patient notes");
 	if (req.session.status == "psychologist" && req.session.UID != null) {
 		console.log("Retrieving patient list for psychologist startPage");
 		let sqlStringPat = "SELECT Vorname, Nachname, Notiz FROM Patient a, Tagebuch b WHERE a.PatientenID=b.PatientenID AND b.Notiz IS NOT NULL";
