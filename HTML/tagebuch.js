@@ -5,9 +5,6 @@
  */
 function jsLog (url, data) {
     var xhr = new XMLHttpRequest();
-    xhr.open("POST", url,true);
-    //  Set timeout duration
-    xhr.timeout = 3000;
     //  On successful request -> popup
     xhr.onreadystatechange = function() {
         if (this.readyState == 4 && this.status == 200) {
@@ -19,8 +16,15 @@ function jsLog (url, data) {
                 type: 'success',
                 title: 'Erfolgreich ausgeloggt!'
             });
+			document.write(xhr.responseText);
+
         }
     };
+	
+	xhr.open("POST", url,true);
+	xhr.setRequestHeader("Content-type", "application/json");
+	xhr.timeout = 3000;
+
     //  Define function on timeout -> Show popup "Keine Verbindung"
     xhr.ontimeout = function () {
         swal.fire({
@@ -39,7 +43,7 @@ function jsPatLogout (url) {
     var xhr = new XMLHttpRequest();
     xhr.open("GET", url,true);
     //  Set timeout duration
-    xhr.timeout = 3000;
+    xhr.timeout = 5000;
     //  On successful request -> popup
     xhr.onreadystatechange = function() {
         if (this.readyState == 4 && this.status == 200) {
@@ -82,7 +86,11 @@ $(function (){
         //  server url
         //var url = "https://httpbin.org/get";
 		var url = "https://localhost:8080/getSave";
-        jsLog(url, jsonReq);
+		var jsonreq = JSON.stringify({
+            stimmung: radioId1,
+            schlafstimmung: radioId2
+        });
+        jsLog(url, jsonreq);
     });
     $('#patientLogout').click(function(){
         $("#patientLogout").attr('disabled', 'disabled');
