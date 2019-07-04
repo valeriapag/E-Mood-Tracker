@@ -47,7 +47,7 @@ app.use(bodyparser.urlencoded({ extended: false }));
 
 //	Set view folder and engine to render patient list
 app.set("views", __dirname + "/HTML/views");
-app.engine("hbs", hbs({extname : "hbs", defaultLayout: "layout", layoutsDir: __dirname + "/HTML/views/layouts"}));
+app.engine('.hbs', hbs({extname: '.hbs'}));
 app.set("view engine", "hbs");
 
 //	Set session cookies
@@ -232,7 +232,7 @@ app.post("/patientSearch", async function (req, res) {
 	var Keys = Object.keys(map);
 	console.log(Keys);
 	for (m in Keys){
-		if (map[Keys[m]] == "") {
+		if (map[Keys[m]] === "" || map[Keys[m]] === undefined) {
 			//	Don´t add to string array
 
 			//	Check if all values are undefined
@@ -260,7 +260,8 @@ app.post("/patientSearch", async function (req, res) {
 			//	Same procedure as with patient
 			try {
 				await console.log(result);
-				await res.render('patienten', result);
+				var final = await JSON.stringify(result);
+				await res.send(final);
 			}
 				//	Catch error during query handling
 			catch (err) {
@@ -380,6 +381,11 @@ app.get("/getPats", function (req, res) {
 		}
 	}
 });
+
+app.post("/patientDiag", function (req, res) {
+	//
+});
+
 
 app.use(express.static('HTML'));
 
