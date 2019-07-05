@@ -11,7 +11,8 @@ function jsLogout (url) {
     xhr.timeout = 3000;
     //  On successful request -> popup
     xhr.onreadystatechange = function() {
-        if (this.readyState === 4 && this.status === 200) {
+        if (this.readyState == 4 && this.status == 200) {
+            /*
             swal.fire({
                 toast: true,
                 position: 'center',
@@ -20,25 +21,34 @@ function jsLogout (url) {
                 type: 'success',
                 title: 'Erfolgreich ausgeloggt!'
             });
+
+             */
             document.write(xhr.responseText);
+
         }
-        else if (this.readyState === 4 && this.status === 500) {
+        else if (this.readyState == 4 && this.status == 500) {
+            /*
             swal.fire({
                 title: 'Server error!',
                 type: 'error',
                 backdrop: 'true',
                 confirmButtonText: 'Ok'
             });
+
+             */
         }
     };
     //  Define function on timeout -> Show popup "Keine Verbindung"
     xhr.ontimeout = function () {
+        /*
         swal.fire({
             title: 'Keine Verbindung!',
             type: 'error',
             backdrop: 'true',
             confirmButtonText: 'Ok'
         });
+
+         */
         $("#logoutSearch").removeAttr('disabled');
         $("#logoutDiag").removeAttr('disabled');
         $("#logoutStart").removeAttr('disabled');
@@ -49,63 +59,65 @@ function jsLogout (url) {
     xhr.send();
 }
 
-//  On click: start logout procedure
-$('#logoutDiag').click(function(){
-    var $this = $(this);
-    //  Change to loading icon and disable button
-    $this.attr('disabled', 'disabled').html("<span " +
-        "class=\"spinner-border spinner-border-sm\" role=\"status\" aria-hidden=\"true\"></span>");
-    //  Send logout info to server
-    //  server url /logout
-    var url = "https://localhost:8080/ausloggen";
-    jsLogout(url);
-});
+$(function () {
+    //  On click: start logout procedure
+    $('#logoutDiag').click(function () {
+        var $this = $(this);
+        //  Change to loading icon and disable button
+        $this.attr('disabled', 'disabled').html("<span " +
+            "class=\"spinner-border spinner-border-sm\" role=\"status\" aria-hidden=\"true\"></span>");
+        //  Send logout info to server
+        //  server url /logout
+        var url = "https://localhost:8080/ausloggen";
+        jsLogout(url);
+    });
 //  On click: redirect to login page
-$('#login').click(function(){
-    var $this = $(this);
-    //  Change to loading icon and disable button
-    $this.attr('disabled', 'disabled').html("<span " +
-        "class=\"spinner-border spinner-border-sm\" role=\"status\" aria-hidden=\"true\"></span>");
-    // server url
-    //var url = "http://www.google.com:81/";
-    //var url = "https://httpbin.org/get";
-    var url = "https://localhost:8080/";
-    //  Redirect to login page if connection successful
-    jsLogout(url);
-});
+    $('#login').click(function () {
+        var $this = $(this);
+        //  Change to loading icon and disable button
+        $this.attr('disabled', 'disabled').html("<span " +
+            "class=\"spinner-border spinner-border-sm\" role=\"status\" aria-hidden=\"true\"></span>");
+        // server url
+        //var url = "http://www.google.com:81/";
+        //var url = "https://httpbin.org/get";
+        var url = "https://localhost:8080/";
+        //  Redirect to login page if connection successful
+        jsLogout(url);
+    });
 //  On click (Dropdown menu): start logout procedure
-$("#logoutStart").click(function(){
-    //  Disable dropdown button
-    $("#logoutDrop").attr('disabled', 'disabled');
-    //  Send logout info to server
-    //  server url
-    var url = "https://localhost:8080/ausloggen";
-    jsLogout(url);
-});
+    $("#logoutStart").click(function () {
+        //  Disable dropdown button
+        $("#logoutDrop").attr('disabled', 'disabled');
+        //  Send logout info to server
+        //  server url
+        var url = "https://localhost:8080/ausloggen";
+        jsLogout(url);
+    });
 //  On click (Dropdown menu): start logout procedure
-$("#logoutLayout").click(function(){
-    //  Disable dropdown button
-    $("#diagLogout").attr('disabled', 'disabled');
-    //  Send logout info to server
-    //  server url
-    var url = "https://localhost:8080/ausloggen";
-    jsLogout(url);
-});
+    $("#logoutLayout").click(function () {
+        //  Disable dropdown button
+        $("#diagLogout").attr('disabled', 'disabled');
+        //  Send logout info to server
+        //  server url
+        var url = "https://localhost:8080/ausloggen";
+        jsLogout(url);
+    });
 //  On click (Dropdown menu): start logout procedure
-$("#logoutSearch").click(function(){
-    //  Disable dropdown button
-    $("#searchLogout").attr('disabled', 'disabled');
-    //  Send logout info to server
-    //  server url
-    var url = "https://localhost:8080/ausloggen";
-    jsLogout(url);
-});
-$("#patientLogout").click(function(){
-    //  Disable button and show spinner
-    $("#patientLogout").attr('disabled', 'disabled').html("<span " +
-        "class=\"spinner-border spinner-border-sm\" role=\"status\" aria-hidden=\"true\"></span>");
-    //  Send logout info to server
-    //  server url
-    var url = "https://localhost:8080/ausloggen";
-    jsLogout(url);
+    $("#logoutSearch").click(function () {
+        //  Disable dropdown button
+        $("#searchLogout").attr('disabled', 'disabled');
+        //  Send logout info to server
+        //  server url
+        var url = "https://localhost:8080/ausloggen";
+        jsLogout(url);
+    });
+    $("#patientLogout").click(function () {
+        //  Disable button and show spinner
+        $("#patientLogout").attr('disabled', 'disabled').html("<span " +
+            "class=\"spinner-border spinner-border-sm\" role=\"status\" aria-hidden=\"true\"></span>");
+        //  Send logout info to server
+        //  server url
+        var url = "https://localhost:8080/ausloggen";
+        jsLogout(url);
+    });
 });

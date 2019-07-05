@@ -11,6 +11,7 @@ function jsGetData (url, req) {
     //  On successful request -> popup
     xhr.onreadystatechange = function() {
         if (this.readyState === 4 && this.status === 200) {
+            /*
             swal.fire({
                 toast: true,
                 position: 'center',
@@ -19,24 +20,30 @@ function jsGetData (url, req) {
                 type: 'success',
                 title: 'Erfolgreich ausgeloggt!'
             });
+
+             */
             var json = JSON.parse(xhr.responseText);
-            return json;
+
         }
     };
     //  Define function on timeout -> Show popup "Keine Verbindung"
     xhr.ontimeout = function () {
+        /*
         swal.fire({
             title: 'Keine Verbindung!',
             type: 'error',
             backdrop: 'true',
             confirmButtonText: 'Ok'
         });
+
+         */
     };
     xhr.send(req);
 }
 
 //  Function on page ready, plot diagram with patient data
-
+$(function () {
+    /*
     var patId = "";
     //var url = "https://httpbin.org/post";
     var url = "https://localhost:8080/patientList";
@@ -44,6 +51,8 @@ function jsGetData (url, req) {
     var req = JSON.stringify({
         patient: patId
     });
+
+     */
     //  Get data
     //var json = jsGetData(url,req);
     //var patData = [0,1,2,3,2,1,0];//json["patientData"];
@@ -72,7 +81,7 @@ function jsGetData (url, req) {
                     pointHoverBorderWidth: 2,
                     pointRadius: 6,
                     pointHitRadius: 10,
-                    data: [null,4,null,5,null,null,null]
+                    data: [7, 3, 4, 4, 5, 6, 8]
                 },
                 {
                     label: "Schlafstimmung",
@@ -93,7 +102,7 @@ function jsGetData (url, req) {
                     pointHoverBorderWidth: 2,
                     pointRadius: 6,
                     pointHitRadius: 10,
-                    data: [null,null,null,3,null,2,null]
+                    data: [1, 4, 8, 2, 5, 1, 6]
                 }]
         },
         options: {
@@ -113,3 +122,4 @@ function jsGetData (url, req) {
         $("#patNote").append('<p>' + i + '. ' + item["note"] + '</p>');
     });
     */
+});

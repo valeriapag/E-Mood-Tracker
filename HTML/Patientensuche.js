@@ -15,12 +15,14 @@
 
 function getId(id) {
     let url = "https://localhost:8080/patientDiag";
-    data = {PatientId: id};
+    let jsonId = JSON.stringify({
+        PatientId: id
+    });
     var xhr = new XMLHttpRequest();
     xhr.open("POST", url,true);
     xhr.setRequestHeader("Content-type", "application/json");
     //  On successful request -> popup
-    xhr.onreadystatechange = async function() {
+    xhr.onreadystatechange = function() {
         if (this.readyState === 4 && this.status === 200) {
             /*
             swal.fire({
@@ -125,12 +127,15 @@ function getId(id) {
     //  Define function on timeout -> Show popup "Keine Verbindung"
 
     xhr.ontimeout = function () {
+        /*
         swal.fire({
             title: 'Keine Verbindung!',
             type: 'error',
             backdrop: 'true',
             confirmButtonText: 'Ok'
         });
+
+         */
         $("#search").removeAttr('disabled').html('suchen');
     };
 
@@ -142,8 +147,8 @@ function jsSearch(postUrl, data) {
     xhr.open("POST", postUrl,true);
     xhr.setRequestHeader("Content-type", "application/json");
     //  On successful request -> popup
-    xhr.onreadystatechange = async function() {
-        if (this.readyState === 4 && this.status === 200) {
+    xhr.onreadystatechange = function() {
+        if (this.readyState == 4 && this.status == 200) {
             /*
             swal.fire({
                 toast: true,
@@ -155,13 +160,12 @@ function jsSearch(postUrl, data) {
             });
             */
             let patData = JSON.parse(xhr.responseText);
-            document.write(patData);
             $("#rem").html("");
             $("#divCont").append("<ul class=\"list-group\" id=\"liste\"></ul>");
             for (item in patData) {
                 let i = patData[item];
-                let patId = i["PatientenId"];
-                $("#liste").append("<li class=\"list-group-item\"" + "id=" + patId +" onclick=\"getId(this.id)\">" + i["Vorname"] + " - " + i["Nachname"] + " - " + i["Geschlecht"] + " - " + i["Krankheit"] + "" + "<a href=\"#\">Clickme</a></li><br>");
+                let patId = i["PatientenID"];
+                $("#liste").append("<li class=\"list-group-item\"" + "id=\"" + patId +"\">" + i["Vorname"] + " - " + i["Nachname"] + " - " + i["Geschlecht"] + " - " + i["Krankheit"] + " - " + "<a href='#'>Auswaehlen</a></li><br>");
             }
         }
         else if (this.readyState === 4 && this.status === 401) {
@@ -182,12 +186,15 @@ function jsSearch(postUrl, data) {
     //  Define function on timeout -> Show popup "Keine Verbindung"
 
     xhr.ontimeout = function () {
+        /*
         swal.fire({
             title: 'Keine Verbindung!',
             type: 'error',
             backdrop: 'true',
             confirmButtonText: 'Ok'
         });
+
+         */
         $("#search").removeAttr('disabled').html('suchen');
     };
 
@@ -197,27 +204,30 @@ function jsSearch(postUrl, data) {
 /*
     Calls POST function if button clicked, changes to loading icon and back
  */
+$(function () {
+    $("#search").click(function () {
+        var $this = $(this);
+        //  Change to loading icon and disable button
+        $this.attr('disabled', 'disabled').html("<span " +
+            "class=\"spinner-border spinner-border-sm\" role=\"status\" aria-hidden=\"true\"></span>");
+        //  Map object with all values except for gender
+        var map = {};
+        $(".form-control").each(function () {
+            map[$(this).attr("name")] = $(this).val();
+        });
 
-$("#search").click(async function(){
-    var $this = $(this);
-    //  Change to loading icon and disable button
-    $this.attr('disabled', 'disabled').html("<span " +
-        "class=\"spinner-border spinner-border-sm\" role=\"status\" aria-hidden=\"true\"></span>");
-    //  Map object with all values except for gender
-    var map = {};
-    $(".form-control").each(function() {
-        map[$(this).attr("name")] = $(this).val();
+        //  Add gender key/value
+        var gender = $("#dm2 option:selected").text();
+        map["Geschlecht"] = gender;
+        delete map["gen"];
+
+        //  server url
+        //var url = "https://httpbin.org/post";
+        var url = "https://localhost:8080/patientSearch/";
+        var reqJson = JSON.stringify(map);
+
+        jsSearch(url, reqJson);
     });
-
-    //  Add gender key/value
-    var gender = $("#dm2 option:selected").text();
-    map["Geschlecht"] = gender;
-    delete map["gen"];
-
-    //  server url
-    //var url = "https://httpbin.org/post";
-    var url = "https://localhost:8080/patientSearch/";
-    var reqJson = JSON.stringify(map);
-
-    jsSearch(url, reqJson);
+    $("#liste").click(getId(this.id));
 });
+

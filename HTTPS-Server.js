@@ -65,7 +65,11 @@ app.use(session({
 app.get("/", function(req, res) {
 		if (req.session.UID != null) {
 			console.log("Already logged in as " + req.session.status);
-			res.sendFile(__dirname + '/HTML/startseite-psychologe.html');
+			if (req.session.status == 'psychologist'){
+				res.sendFile(__dirname + '/HTML/startseite-psychologe.html');
+			} else {
+				res.sendFile(__dirname + '/HTML/tagebuch.html');
+			}
 		}
 		else {
 			console.log("Sending login HTML page");
@@ -180,8 +184,14 @@ app.post("/getSave", function (req, res){
 	var sqlString = "INSERT INTO tagebuch (PatientenID, Notiz, Stimmung, Schlafstimmung, Datum) VALUES (" + insString + ")";
 	console.log(sqlString);
 	con.query(sqlString,function(err,result){
-		if(err) throw err;
+		if(err) {
+			throw err;
+		}
+		else {
+			res.sendStatus(200);
+		}
 	});
+
 });
 /*
 app.get("/startPage", async function (req, res) {
@@ -201,24 +211,24 @@ app.get("/startPage", async function (req, res) {
 //	Handle logout requests
 app.get("/ausloggen", function (req, res) {
 	console.log("logout attempt");
-			console.log("Logging out " + req.session.dbId);
-			console.log("User status: " + req.session.status);
-			//	Set user status and ids to null
-			req.session.dbId = null;
-			req.session.status = null;
-			req.session.UID = null;
-			//	Set cookie to expire
-			req.session.cookie.expires = new Date(0);
-			res.sendFile(__dirname + '/HTML/ausloggen.html');
+	console.log("Logging out " + req.session.dbId);
+	console.log("User status: " + req.session.status);
+	//	Set user status and ids to null
+	req.session.dbId = null;
+	req.session.status = null;
+	req.session.UID = null;
+	//	Set cookie to expire
+	req.session.cookie.expires = new Date(0);
+	res.sendFile(__dirname + '/HTML/ausloggen.html');
 
 });
 
 //	Handle patient search requests
-app.post("/patientSearch", async function (req, res) {
-	await console.log("Request for patient search received");
-	await console.log(req.body);
+app.post("/patientSearch", function (req, res) {
+	console.log("Request for patient search received");
+	console.log(req.body);
 	//	Collect values from request JSON
-	var map = await {
+	var map = {
 		Nachname: req.body.Nachname,
 		Vorname: req.body.Vorname,
 		Geburtsdatum: req.body.Geburtsdatum,
@@ -251,11 +261,11 @@ app.post("/patientSearch", async function (req, res) {
 	}
 	else {
 		console.log(sqlQueryTemp);
-		let len = await sqlQueryTemp.length;
-		let sqlQuery = await sqlQueryTemp.slice(0,len-5);
-		sqlQuery = await sqlQuery.trim();
-		await console.log(sqlQuery);
-		await console.log("Retrieving data for patient search");
+		let len = sqlQueryTemp.length;
+		let sqlQuery = sqlQueryTemp.slice(0,len-5);
+		sqlQuery = sqlQuery.trim();
+		console.log(sqlQuery);
+		console.log("Retrieving data for patient search");
 		con.query(sqlQuery, async function(err, result){
 			//	Same procedure as with patient
 			try {
@@ -271,7 +281,15 @@ app.post("/patientSearch", async function (req, res) {
 	}
 });
 
-app.post("/patientCreate", function (req, res) {
+app.get("/patientCreate", function (req, res) {
+	res.redirect("/pCreate");
+});
+
+app.get("/pCreate", function (req, res) {
+	res.sendFile(__dirname + '/HTML/patient-anlegen.html');
+});
+
+app.post("/toPatientCreate", function (req, res) {
 	console.log("Request for create patient received");
 	//	Collect values from request JSON
 
@@ -297,7 +315,7 @@ app.post("/patientCreate", function (req, res) {
 	let login = {
 		PatientenID: uuid.v1(),
 		Username:  req.body.username,
-		Passworthash: md5(pw)
+		Passworthash: pw
 	};
 	//	Insert patient and login info into DB
 	let sqlQueryPat = "INSERT INTO Patient (PatientenID, Vorname , Nachname,Geburtsdatum, Geburtsort, Strasse, Hausnummer, PLZ, Ort, Email,Geschlecht, Krankheit, PsychologenID) VALUES ('" + map.patientId + "','" + map.Vorname + "','" + map.Nachname + "','" + map.Geburtsdatum + "','" + map.GeburtsOrt + "','" + map.Strasse + "','" + map.Hausnummer + "','" + map.PLZ + "','" + map.Ort + "','" + map.Email + "','" + map.Geschlecht + "','" + map.Krankheit + "','" + map.psychID + "')";
@@ -340,16 +358,16 @@ app.get("/patientID", function (req, res) {
 
 });
 
-app.get("/toSearchPage", async function (req, res) {
+app.get("/toSearchPage", function (req, res) {
 	console.log("Redirecting to search page");
-	res.redirect("/sPage")
-});
-
-app.get("/sPage", async function (req, res) {
 	res.sendFile(__dirname + '/HTML/patientensuche.html');
 });
 
-app.get("/toPatientList", async function (req, res) {
+app.get("/sPage", function (req, res) {
+	res.sendFile(__dirname + '/HTML/patientensuche.html');
+});
+
+app.get("/toPatientList", function (req, res) {
 	console.log("Redirecting to search page");
 	res.redirect("/sPage")
 });
@@ -375,15 +393,15 @@ app.get("/getPats", function (req, res) {
 	}
 	else {
 		console.log("Can´t retrieve patient list without psychologist credentials");
-		res.sendStatus(401);
+		//res.sendStatus(401);
 		if (req.session.status == "patient"){
 			res.sendFile(__dirname + '/HTML/tagebuch.html');
 		}
 	}
 });
 
-app.post("/patientDiag", function (req, res) {
-	//
+app.get("/patientDiag", function (req, res) {
+	res.sendFile(__dirname + '/HTML/diagrammansicht.html');
 });
 
 
