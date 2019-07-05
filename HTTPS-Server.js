@@ -292,7 +292,7 @@ app.get("/pCreate", function (req, res) {
 app.post("/toPatientCreate", function (req, res) {
 	console.log("Request for create patient received");
 	//	Collect values from request JSON
-
+	console.log(req.body);
 	//	Patient Info
 	let map = {
 		Nachname: req.body.name,
@@ -310,6 +310,8 @@ app.post("/toPatientCreate", function (req, res) {
 		psychID: req.session.dbId
 	};
 
+	console.log(JSON.stringify(map));
+
 	//	Patient login info
 	let pw = req.body.password;
 	let login = {
@@ -321,6 +323,8 @@ app.post("/toPatientCreate", function (req, res) {
 	let sqlQueryPat = "INSERT INTO Patient (PatientenID, Vorname , Nachname,Geburtsdatum, Geburtsort, Strasse, Hausnummer, PLZ, Ort, Email,Geschlecht, Krankheit, PsychologenID) VALUES ('" + map.patientId + "','" + map.Vorname + "','" + map.Nachname + "','" + map.Geburtsdatum + "','" + map.GeburtsOrt + "','" + map.Strasse + "','" + map.Hausnummer + "','" + map.PLZ + "','" + map.Ort + "','" + map.Email + "','" + map.Geschlecht + "','" + map.Krankheit + "','" + map.psychID + "')";
 	let sqlQueryLogin = "INSERT INTO Patientenlogin (PatientenID, Username , Passworthash) VALUES ('" + map.patientId + "','" + login.Username + "','" + login.Passworthash +"')";
 	console.log("Creating patient");
+	console.log(sqlQueryLogin);
+	console.log(sqlQueryPat);
 	con.query(sqlQueryPat, async function(err, result){
 		//	Same procedure as with patient
 		try {
@@ -339,7 +343,7 @@ app.post("/toPatientCreate", function (req, res) {
 		try {
 			await console.log(result);
 		}
-			//	Catch error during query handling
+		//	Catch error during query handling
 		catch (err) {
 			await console.log(err);
 			res.sendStatus(500);

@@ -46,6 +46,7 @@ function jsCancel (url) {
 function jsCreate (url, data) {
     var xhr = new XMLHttpRequest();
     xhr.open("POST", url,true);
+    xhr.setRequestHeader("Content-type", "application/json");
     //  Set timeout duration
     xhr.timeout = 3000;
     //  On successful request -> popup
@@ -124,6 +125,7 @@ $(function () {
         map["gender"] = gender;
         delete map["meds"];
         delete map["gen"];
+
 
         //  server url
         //var url = "https://httpbin.org/post";

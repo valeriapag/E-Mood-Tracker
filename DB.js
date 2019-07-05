@@ -20,27 +20,27 @@ con.connect(function(err) {
     if (err) throw err;
     console.log("Database created");
   });
-  var sql = "CREATE TABLE Patient (PatientenID VARCHAR(25), Vorname VARCHAR(25), Nachname VARCHAR(25), Geburtsdatum Date, Geburtsort VARCHAR(25), Strasse VARCHAR(25), Hausnummer Integer, PLZ VARCHAR(10), Ort VARCHAR(25), Email VARCHAR(50),Geschlecht VARCHAR(25), Krankheit VARCHAR(25), PsychologenID VARCHAR(25))";
+  var sql = "CREATE TABLE Patient (PatientenID VARCHAR(50), Vorname VARCHAR(50), Nachname VARCHAR(50), Geburtsdatum Date, Geburtsort VARCHAR(50), Strasse VARCHAR(50), Hausnummer Integer, PLZ VARCHAR(10), Ort VARCHAR(50), Email VARCHAR(50),Geschlecht VARCHAR(50), Krankheit VARCHAR(50), PsychologenID VARCHAR(50))";
   con1.query(sql, function (err, result) {
     if (err) throw err;
     console.log("Patient Table created");
   });
-  var sql1 = "CREATE TABLE Patientenlogin (PatientenID VARCHAR(25), Username VARCHAR(25), Passworthash VARCHAR(25))";
+  var sql1 = "CREATE TABLE Patientenlogin (PatientenID VARCHAR(50), Username VARCHAR(50), Passworthash VARCHAR(50))";
   con1.query(sql1, function (err, result) {
     if (err) throw err;
     console.log("Patientenlogin Table created");
   });
-  var sql2 = "CREATE TABLE Tagebuch (PatientenID VARCHAR(25), med VARCHAR(10), Notiz VARCHAR(25), Stimmung Integer, Schlafstimmung Integer, Datum VARCHAR(15))";
+  var sql2 = "CREATE TABLE Tagebuch (PatientenID VARCHAR(50), med VARCHAR(10), Notiz VARCHAR(50), Stimmung Integer, Schlafstimmung Integer, Datum VARCHAR(15))";
   con1.query(sql2, function (err, result) {
     if (err) throw err;
     console.log("Tagebuch Table created");
   });
-  var sql3 = "CREATE TABLE Psychologe (PsychologenID VARCHAR(25), Vorname VARCHAR(25), Nachname VARCHAR(25), Geburtsdatum Date, Geburtsort VARCHAR(25), Strasse VARCHAR(25), Hausnummer Integer, PLZ VARCHAR(10), Ort VARCHAR(25), Email VARCHAR(50))";
+  var sql3 = "CREATE TABLE Psychologe (PsychologenID VARCHAR(50), Vorname VARCHAR(50), Nachname VARCHAR(50), Geburtsdatum Date, Geburtsort VARCHAR(50), Strasse VARCHAR(50), Hausnummer Integer, PLZ VARCHAR(10), Ort VARCHAR(50), Email VARCHAR(50))";
   con1.query(sql3, function (err, result) {
     if (err) throw err;
     console.log("Psychologe Table created");
   });
-  var sql4 = "CREATE TABLE Psychologenlogin (PsychologenID VARCHAR(25), Username VARCHAR(25), Passworthash VARCHAR(25))";
+  var sql4 = "CREATE TABLE Psychologenlogin (PsychologenID VARCHAR(50), Username VARCHAR(50), Passworthash VARCHAR(50))";
   con1.query(sql4, function (err, result) {
     if (err) throw err;
     console.log("Psychologenlogin Table created");
