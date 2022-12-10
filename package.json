@@ -4,7 +4,7 @@
   "description": "Hier ein kleiner Ablauf bevor man seinen Code pusht. Dieser Ablauf ist wichtig um möglichst\r so wenig Konflikte wie möglich zu haben!\r 1. Commit\r 2. Pull\r 3. (Eventuell Konflikte beheben)\r 4. (Testen ob der behobene Konflikt funktioniert)\r 5. Push",
   "main": "HTTPS-Server.js",
   "dependencies": {
-    "express": "^4.17.1",
+    "express": "^4.17.3",
     "express-handlebars": "^3.1.0",
     "express-session": "^1.16.2",
     "mysql": "^2.17.1",
